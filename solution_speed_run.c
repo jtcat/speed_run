@@ -95,36 +95,34 @@ static void solution_2_dynamic(int final_position)
 	int	decs;
 	int	speeds[1 + final_position];
 
-	solution_2.n_moves = 0;
+	#define move solution_2.n_moves
+	move =  0;
 	solution_2.positions[0] = pos;
 	speeds[0] = 0;
 	while (pos != final_position)
 	{
-  		solution_2_count++;
 		// Check if stopping distance at possible speeds goes over bounds	
 		decs = 0;
-		if ((pos + sum1ton(++speeds[pos]) <= final_position && ++decs)\
-			|| (pos + sum1ton(--speeds[pos]) <= final_position && ++decs)\
-			|| (pos + sum1ton(--speeds[pos]) <= final_position && ++decs))
+  		solution_2_count++;
+		if ((pos + sum1ton(++speeds[move]) <= final_position && ++decs)\
+			|| (pos + sum1ton(--speeds[move]) <= final_position && ++decs)\
+			|| (pos + sum1ton(--speeds[move]) <= final_position && ++decs))
 		{
 			// Check if step at possible speeds breaks intermediary speed limits
-			if (sol_2_valstep(pos, speeds[pos])\
-				|| (--decs && sol_2_valstep(pos, --speeds[pos]))\
-				|| (--decs && sol_2_valstep(pos, --speeds[pos])))
+			if (sol_2_valstep(pos, speeds[move])\
+				|| (--decs && sol_2_valstep(pos, --speeds[move]))\
+				|| (--decs && sol_2_valstep(pos, --speeds[move])))
 			{
-				speeds[pos + speeds[pos]] = speeds[pos];
-				pos += speeds[pos];
-  				solution_2.positions[solution_2.n_moves++] = pos;
+				pos += speeds[move];
+				speeds[move + 1] = speeds[move];
+  				solution_2.positions[move++] = pos;
 			}
 			else
 			{
 				// Walk back until we can decrease speed and go forward again
-				while (speeds[pos - speeds[pos]] > speeds[pos])
-				{
-					pos -= speeds[pos];
-  					solution_2.n_moves--;
-				}
-				speeds[pos]--;
+				while (speeds[move] < speeds[move - 1])
+					pos = solution_2.positions[--move]; 
+				speeds[move]--;
 			}
 		}
 	}

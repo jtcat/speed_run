@@ -75,12 +75,20 @@ static solution_t solution_2;
 static double solution_2_elapsed_time; // time it took to solve the problem
 static unsigned long solution_2_count; // effort dispended solving the problem
 
+//	Sum 1 to n: stopping distance going at speed n
 static int sum1ton(int n)
 {
 	return n * (n + 1) / 2;
 }
 
-static int sol_2_valstep(int pos, int speed)
+//	Checks if it is possible to stop before or at finalpos going at speed
+//	from pos
+static int valstop(int pos, int speed, int finalpos)
+{
+	return (pos + sum1ton(speed)) <= finalpos;
+}
+
+static int valstep(int pos, int speed)
 {
 	int	end = pos + speed;
 	for (; pos <= end; pos++)
@@ -92,40 +100,55 @@ static int sol_2_valstep(int pos, int speed)
 static void solution_2_dynamic(int final_position)
 {
 	int	pos = 0;
-	int	decs;
-	int	speeds[1 + final_position];
+	int	incmaxes[1 + final_position];
+	int	move = 0;
+	int	speed = 0;
+	
+	#define incmax incmaxes[move]
 
-	#define move solution_2.n_moves
-	move =  0;
+	#define MOVEBACK\
+		speed -= incmaxes[--move];\
+		--incmaxes[move];\
+		pos = solution_2.positions[move];
+	incmax = 1;
 	solution_2.positions[0] = pos;
-	speeds[move] = 0;
 	while (pos != final_position)
 	{
-		// Check if stopping distance at possible speeds goes over bounds	
-		decs = 0;
   		solution_2_count++;
-		if ((pos + sum1ton(++speeds[move]) <= final_position && ++decs)\
-			|| (pos + sum1ton(--speeds[move]) <= final_position && ++decs)\
-			|| (pos + sum1ton(--speeds[move]) <= final_position && ++decs))
+		if (valstop(pos, speed + incmax, final_position))
 		{
-			// Check if step at possible speeds breaks intermediary speed limits
-			if (sol_2_valstep(pos, speeds[move])\
-				|| (--decs >= 0 && sol_2_valstep(pos, --speeds[move]))\
-				|| (--decs >= 0 && sol_2_valstep(pos, --speeds[move])))
+			stepval:
+			if (valstep(pos, speed + incmax))
 			{
-				pos += speeds[move];
-				speeds[move + 1] = speeds[move];
-  				solution_2.positions[++move] = pos;
+				speed += incmax;
+				pos += speed;
+				solution_2.positions[++move] = pos;
+				incmax = 1;
+				continue;
 			}
 			else
 			{
-				// Walk back until we can decrease speed and go forward again
-				while (speeds[move] < speeds[move - 1])
-					pos = solution_2.positions[--move]; 
-				speeds[move]--;
+				incmax--;
+				if (incmax >= -1)
+					goto stepval;
+				else
+				{
+					MOVEBACK
+				}
+			}		
+		}
+		else
+		{
+			incmax--;
+			if (incmax >= -1)
+				continue;
+			else
+			{
+				MOVEBACK
 			}
 		}
 	}
+	solution_2.n_moves = move;
 }
 
 static void solve_2(int final_position)

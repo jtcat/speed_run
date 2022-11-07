@@ -82,8 +82,9 @@ static int sum1ton(int n)
 
 static int sol_2_valstep(int pos, int speed)
 {
-	for (int i = pos; i < (pos + speed); i++)
-		if (speed > max_road_speed[i])
+	int	end = pos + speed;
+	for (; pos <= end; pos++)
+		if (speed > max_road_speed[pos])
 			return 0;
 	return 1;
 }
@@ -102,14 +103,14 @@ static void solution_2_dynamic(int final_position)
   		solution_2_count++;
 		// Check if stopping distance at possible speeds goes over bounds	
 		decs = 0;
-		if ((sum1ton(speeds[pos]++) <= final_position && ++decs)\
-			|| (sum1ton(speeds[pos]--) <= final_position && ++decs)\
-			|| (sum1ton(speeds[pos]--) <= final_position && ++decs))
+		if ((pos + sum1ton(++speeds[pos]) <= final_position && ++decs)\
+			|| (pos + sum1ton(--speeds[pos]) <= final_position && ++decs)\
+			|| (pos + sum1ton(--speeds[pos]) <= final_position && ++decs))
 		{
 			// Check if step at possible speeds breaks intermediary speed limits
 			if (sol_2_valstep(pos, speeds[pos])\
-				|| (--decs && sol_2_valstep(pos, speeds[pos]--))\
-				|| (--decs && sol_2_valstep(pos, speeds[pos]--)))
+				|| (--decs && sol_2_valstep(pos, --speeds[pos]))\
+				|| (--decs && sol_2_valstep(pos, --speeds[pos])))
 			{
 				speeds[pos + speeds[pos]] = speeds[pos];
 				pos += speeds[pos];

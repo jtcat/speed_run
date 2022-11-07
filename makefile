@@ -21,4 +21,4 @@ solution_speed_run:		solution_speed_run.c make_custom_pdf.c
 	${CC} -g -Wall -O2 -D_use_zlib_=0 solution_speed_run.c -o solution_speed_run -lm
 
 solution_speed_run_with_zlib:	solution_speed_run.c make_custom_pdf.c
-	${CC} -Wall -O2 -D_use_zlib_=1 solution_speed_run.c -o solution_speed_run_with_zlib -lm -lz
+	${CC} -g -Wall -O2 -D_use_zlib_=1 solution_speed_run.c -o solution_speed_run_with_zlib -lm -lz

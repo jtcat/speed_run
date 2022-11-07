@@ -96,6 +96,7 @@ static void solution_2_dynamic(int final_position)
 
 	solution_2.n_moves = 0;
 	solution_2.positions[0] = pos;
+	speeds[0] = 0;
 	while (pos != final_position)
 	{
   		solution_2_count++;
@@ -105,7 +106,7 @@ static void solution_2_dynamic(int final_position)
 			|| (sum1ton(speeds[pos]--) <= final_position && ++decs)\
 			|| (sum1ton(speeds[pos]--) <= final_position && ++decs))
 		{
-			// Check if step at curr speed breaks intermediary speed limits
+			// Check if step at possible speeds breaks intermediary speed limits
 			if (sol_2_valstep(pos, speeds[pos])\
 				|| (--decs && sol_2_valstep(pos, speeds[pos]--))\
 				|| (--decs && sol_2_valstep(pos, speeds[pos]--)))
@@ -154,7 +155,6 @@ int main(int argc,char *argv[argc + 1])
   // generate the example data
   if(argc == 2 && argv[1][0] == '-' && argv[1][1] == 'e' && argv[1][2] == 'x')
   {
-    example();
     return 0;
   }
   // initialization

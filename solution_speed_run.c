@@ -28,7 +28,7 @@
 
 #include <math.h>
 #include <stdio.h>
-#include "../P02/elapsed_time.h"
+#include "elapsed_time.h"
 #include "make_custom_pdf.c"
 
 
@@ -98,7 +98,7 @@ static void solution_2_dynamic(int final_position)
 	#define move solution_2.n_moves
 	move =  0;
 	solution_2.positions[0] = pos;
-	speeds[0] = 0;
+	speeds[move] = 0;
 	while (pos != final_position)
 	{
 		// Check if stopping distance at possible speeds goes over bounds	
@@ -110,12 +110,12 @@ static void solution_2_dynamic(int final_position)
 		{
 			// Check if step at possible speeds breaks intermediary speed limits
 			if (sol_2_valstep(pos, speeds[move])\
-				|| (--decs && sol_2_valstep(pos, --speeds[move]))\
-				|| (--decs && sol_2_valstep(pos, --speeds[move])))
+				|| (--decs >= 0 && sol_2_valstep(pos, --speeds[move]))\
+				|| (--decs >= 0 && sol_2_valstep(pos, --speeds[move])))
 			{
 				pos += speeds[move];
 				speeds[move + 1] = speeds[move];
-  				solution_2.positions[move++] = pos;
+  				solution_2.positions[++move] = pos;
 			}
 			else
 			{

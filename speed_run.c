@@ -28,7 +28,7 @@
 
 #include <math.h>
 #include <stdio.h>
-#include "../P02/elapsed_time.h"
+#include "elapsed_time.h"
 #include "make_custom_pdf.c"
 
 

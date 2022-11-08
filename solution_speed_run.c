@@ -115,6 +115,7 @@ static void solution_2_dynamic(int final_position)
 	while (pos != final_position)
 	{
   		solution_2_count++;
+		stoploop:
 		if (valstop(pos, speed + incmax, final_position))
 		{
 			stepval:
@@ -126,17 +127,14 @@ static void solution_2_dynamic(int final_position)
 				incmax = 1;
 				continue;
 			}
-			incmax--;
-			if (incmax >= -1)
+			if (--incmax >= -1)
 				goto stepval;
 			MOVEBACK
 			continue;
 		}
-		incmax--;
-		if (incmax < -1)
-		{
-			MOVEBACK
-		}
+		if (--incmax >= -1)
+			goto stoploop;
+		MOVEBACK
 	}
 	solution_2.n_moves = move;
 }

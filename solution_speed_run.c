@@ -134,8 +134,6 @@ mainloop:
 				MOVEBACK
 				goto mainloop;
 			}
-			--incmax;
-			goto stoploop;
 		}
 		MOVEBACK
 	}

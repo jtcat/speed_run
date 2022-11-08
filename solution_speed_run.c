@@ -131,18 +131,14 @@ static void solution_2_dynamic(int final_position)
 				incmax--;
 				if (incmax >= -1)
 					goto stepval;
-				else
-				{
-					MOVEBACK
-				}
+				MOVEBACK
+				continue;
 			}		
 		}
 		else
 		{
 			incmax--;
-			if (incmax >= -1)
-				continue;
-			else
+			if (incmax < -1)
 			{
 				MOVEBACK
 			}

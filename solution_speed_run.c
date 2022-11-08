@@ -112,41 +112,30 @@ static void solution_2_dynamic(int final_position)
 		pos = solution_2.positions[move];
 	incmax = 1;
 	solution_2.positions[0] = pos;
+mainloop:
 	while (pos != final_position)
 	{
   		solution_2_count++;
-		if (valstop(pos, speed + incmax, final_position))
+		for (; incmax >= -1; incmax--)
 		{
-			stepval:
-			if (valstep(pos, speed + incmax))
+			if (valstop(pos, speed + incmax, final_position))
 			{
-				speed += incmax;
-				pos += speed;
-				solution_2.positions[++move] = pos;
-				incmax = 1;
-				continue;
-			}
-			else
-			{
-				incmax--;
-				if (incmax >= -1)
-					goto stepval;
-				else
+				for (; incmax >= -1; incmax--)
 				{
-					MOVEBACK
+					if (valstep(pos, speed + incmax))
+					{
+						speed += incmax;
+						pos += speed;
+						solution_2.positions[++move] = pos;
+						incmax = 1;
+						goto mainloop;
+					}
 				}
-			}		
-		}
-		else
-		{
-			incmax--;
-			if (incmax >= -1)
-				continue;
-			else
-			{
 				MOVEBACK
+				goto mainloop;
 			}
 		}
+		MOVEBACK
 	}
 	solution_2.n_moves = move;
 }

@@ -88,6 +88,7 @@ static int valstop(int pos, int speed, int finalpos)
 	return (pos + sum1ton(speed)) <= finalpos;
 }
 
+// Checks if step from pos at speed breaks any of the intermediary speed limits
 static int valstep(int pos, int speed)
 {
 	int	end = pos + speed;
@@ -97,21 +98,36 @@ static int valstep(int pos, int speed)
 	return 1;
 }
 
+/*		The solution works by increasing the speed as much as possible
+	without overstepping the finalpos or breaking any speed limits.
+
+		In a move, if any of the those two checks fail, the program attemps to
+	mantain or decrease the speed of the car. If the two checks don't work
+	for any of the possible speeds, the program moves back one step and
+	retries it with the previous speed reduce by one.
+*/
+
 static void solution_2_dynamic(int final_position)
 {
-	int	pos = 0;
-	int	incmaxes[1 + final_position];
-	int	move = 0;
-	int	speed = 0;
-	
+	// Current move
+	#define	move solution_2.n_moves
+
+	// Car position
+	#define pos solution_2.positions[move]
+	#define nextpos solution_2.positions[move+1]
+
+	// Current speed "choice"
 	#define incmax incmaxes[move]
 
-	#define MOVEBACK\
-		speed -= incmaxes[--move];\
-		--incmaxes[move];\
-		pos = solution_2.positions[move];
+	// Stores the "choice" taken at every move (slowdown, cruise, accel)
+	int	incmaxes[1 + final_position];
+
+	// Current speed
+	int	speed = 0;
+	
+	pos = 0;
+	move = 0;
 	incmax = 1;
-	solution_2.positions[0] = pos;
 mainloop:
 	while (pos != final_position)
 	{
@@ -124,20 +140,35 @@ mainloop:
 				{
 					if (valstep(pos, speed + incmax))
 					{
+						// Found valid step, take it
 						speed += incmax;
-						pos += speed;
-						solution_2.positions[++move] = pos;
+						nextpos = pos + speed;
+						move++;
 						incmax = 1;
+						// Jump to main loop to see if it reaches the
+						// end or try the next one, avoiding the fail
+						// state after the end of the two fors
 						goto mainloop;
 					}
 				}
-				MOVEBACK
-				goto mainloop;
+				// Failed to find a step that did not break speed limits
+				// No need to check if they don't outrun the final pos
+				// so stop validating stop dist and walk back one move
+				break;
 			}
 		}
-		MOVEBACK
+		/*
+			There are no possible steps in the current move,
+			so lets try the previous move with it's speed reduced by one
+
+			Move the program back one move by reverting 
+			the prev speed change and by decrementing the
+			move count. Then, choose the next smaller speed.
+		*/
+		move--;
+		speed -= incmax;
+		incmax--;
 	}
-	solution_2.n_moves = move;
 }
 
 static void solve_2(int final_position)

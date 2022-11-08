@@ -126,22 +126,16 @@ static void solution_2_dynamic(int final_position)
 				incmax = 1;
 				continue;
 			}
-			else
-			{
-				incmax--;
-				if (incmax >= -1)
-					goto stepval;
-				MOVEBACK
-				continue;
-			}		
-		}
-		else
-		{
 			incmax--;
-			if (incmax < -1)
-			{
-				MOVEBACK
-			}
+			if (incmax >= -1)
+				goto stepval;
+			MOVEBACK
+			continue;
+		}
+		incmax--;
+		if (incmax < -1)
+		{
+			MOVEBACK
 		}
 	}
 	solution_2.n_moves = move;

@@ -2,7 +2,7 @@ clear
 close
 clc
 
-table = load("107927_speed-run.txt");
+table = load("Results/107927_speed-run.txt");
 n = table(:,1); % Road size
 t = table(:,2); % Time to find a solution
 

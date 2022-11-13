@@ -3,8 +3,8 @@ close
 clc
 
 table = load("speed_run.txt");
-n = table(1:end,1); % Road size
-t = table(1:end,2); % Time to find a solution
+n = table(:,1); % Road size
+t = table(:,2); % Time to find a solution
 
 % Original data plot
 figure(1)

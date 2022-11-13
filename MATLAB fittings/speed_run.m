@@ -30,5 +30,5 @@ title('Time as a function of road size')
 xlabel('Road size')
 ylabel('Time to find a solution (s)')
 
-%% Print the value
+% Print the value
 fprintf('Time needed to solve the problem, with size 800: %e seconds\n',y_fit(end))

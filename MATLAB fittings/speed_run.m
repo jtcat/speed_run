@@ -31,4 +31,4 @@ xlabel('Road size')
 ylabel('Time to find a solution (s)')
 
 % Print the value
-fprintf('Time needed to solve the problem, with size 800: %e seconds\n',y_fit(end))
+fprintf('Time needed to solve the problem, with size 800: %e seconds or %e years\n',y_fit(end),y_fit(end)/3600)

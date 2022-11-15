@@ -13,13 +13,14 @@
 \usepackage{listings}
 \usepackage[T1]{fontenc}
 \usepackage[margin=3cm]{geometry}
+\usepackage[final]{pdfpages}
 
 \newcommand{\nextyear}{\advance\year by 1 \the\year\advance\year by -1}
 
 \setlength{\headheight}{14.2pt}
 \fancypagestyle{fancy}{
 	\fancyhf{}
-	\fancyhead[C]{speed\_run}
+	\fancyhead[C]{A01 - speed\_run}
 	\fancyfoot[R]{
 		\textsf{\thepage}
 	}
@@ -35,6 +36,12 @@
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
+\lstdefinestyle{c_without_comments}%
+{
+	  style=c_with_comments,
+	    morecomment  = [l][\@gobble]{//},
+		  morecomment  = [is]{/*}{*/},
+}
 \lstset{ 
 	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
 	basicstyle=\small\ttfamily,        % the size of the fonts that are used for the code
@@ -42,10 +49,9 @@
 	breaklines=true,                 % sets automatic line breaking
 	captionpos=b,                    % sets the caption-position to bottom
 	commentstyle=\color{mygreen},    % comment style
-	deletekeywords={\ldots},            % if you want to delete keywords from the given language
-	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
 	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-	frame=lines,	                   % adds a frame around the code
+	frameround=tttt,
+	frame=single,	                   % adds a frame around the code
 	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
 	keywordstyle=\color{blue},       % keyword style
 	language=C,                 % the language of the code
@@ -82,11 +88,40 @@
 Este trabalho tem como objetivo desenvolver algoritmos que sejam capazes
 de encontrar o menor número de passos necessários para resolver o seguinte problema:
 \section{Soluções}
-A solução original utiliza uma função recursiva para tentar todas as combinações
-de velocidade possíveis dentro dos limites de cada casa, guardando sempre a melhor solução encontrada até ao momento.
-As soluções seguintes, com exceção da última, partem desta, alterando par
+A solução original utiliza uma função recursiva para verificar todas as combinações
+de passos a todas as velocidades possíveis dentro dos limites de cada casa,
+guardando sempre a melhor solução encontrada até ao momento. Esta possui um tempo
+de execução da ordem das centenas de anos para a resolução do caso \begin{math}n = 801\end{math}.
+Com vista em obter a solução em tempo aceitável, criámos duas soluções capazes de
+o fazer na ordem dos microsegundos. A primeira altera apenas ligeiramente a
+solução original. A segunda é não recursiva e utiliza o princípio da solução anterior com
+algumas optimizações.
 \subsection{Original}
+A solução dada é uma solução recursiva que itera sobre todas as possibilidades de
+percurso, guardando a melhor solução até ao momento.
+
+Ela parte das soluções de maior número de passos (menor velocidade por passo) para
+as de menor número de passos (maior velocidade por passo) dentro das regras do problema.
 \subsection{Original Improved}
+Esta solução introduz duas pequenas mudanças no código original, que no entanto
+geram alterações significativas no seu comportamento.
+
+Em primeiro lugar, é introduzido controlo de fluxo através de um valor de retorno
+\extrang{boolean} (implementado como inteiro).
+\lstinputlisting[linerange={78-81}]{\srcdir/speed\_run.c}
+Se uma sequência de chamadas recursivas chegar a uma solução, a última chamada
+retorna 1. \lstinputlisting[linerange={88-97}]{\srcdir/speed\_run.c}
+Se for este o caso, as chamadas anteriores retornarão também 1.
+Isto significa que o programa grava apenas a primeira solução que encontrar.
+\pagebreak
+\lstinputlisting[linerange={107-109}]{\srcdir/speed\_run.c}
+Tendo isto, torna-se imperativo que o programa encontre a melhor solução possível
+à primeira tentativa. Isto implica que o ``carro'' se mova o mais rápido possível
+em qualquer passo para obter o menor número de passos. A segunda alteração
+garante essa condição ao fazer com que o programa itere
+desde as maiores velocidades para as menores.
+\lstinputlisting[linerange={99-100}]{\srcdir/speed\_run.c}
+
 \subsection{Advance and retreat}
 Este algoritmo foi feito de raiz. Tem como
 princípio tentar a qualquer passo avançar com a velocidade mais alta.
@@ -95,9 +130,12 @@ Em cada passo, a escolha de velocidade é representada por um incremento
 Para verificar passos possíveis, utilizam-se os seguintes métodos:
 
 Calcular a distância de paragem para cada velocidade possível em cada passo para evitar correr para além do fim do
-trajeto.
+trajeto:
+\lstinputlisting[firstline=75, lastline=84]{\srcdir/speed\_run.c}
 
-Verificar, a partir do incremento mais alto, se uma ``passada'' não  quebra os limites de velocidade das casas pelas quais passaria.
+Verificar, a partir do incremento mais alto, se uma ``passada'' não  quebra
+os limites de velocidade das casas pelas quais passaria:
+\lstinputlisting[firstline=86, lastline=95]{\srcdir/speed\_run.c}
 
 Feito o passo, a escolha de incremento é guardada num \extrang{array}
 na posição associada ao número do passo. Desta forma, este \extrang{array}
@@ -106,9 +144,15 @@ Quando um passo é impossível de executar a qualquer das velocidades possíveis
 passo, o algoritmo recua um passo e tenta reduzir o incremento de velocidade até que
 consiga avançar novamente. Não sendo possível avançar com nenhum dos incrementos,
 o programa recua novamente, e assim sucessivamente.
-\vfill
+\pagebreak
+\section{PDFs de soluções}
+\includepdf[pages=-, angle=90]{800_2.pdf}
+\includepdf[pages=-, angle=90]{800_3.pdf}
 \section{Código}
+\subsection{Original Improved}
+\lstinputlisting[firstline=122, lastline=167]{\srcdir/speed\_run.c}
+\pagebreak
 \subsection{Advance and retreat}
-\lstinputlisting[firstline=69, lastline= 185]{\srcdir/solution\_speed\_run.c}
+\lstinputlisting[firstline=170, lastline=284]{\srcdir/speed\_run.c}
 
 \end{document}

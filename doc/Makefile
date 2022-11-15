@@ -1,11 +1,15 @@
-SRC= relatorio.tex
+CSRCDIR= ..
+
+CSRC= $(addprefix $(CSRCDIR)/,speed_run.c)
+
+TEXSRC= relatorio.tex
 
 ENG= pdflatex
 
 all: clean pdf
 
-pdf: $(SRC)
-	$(ENG) -shell-escape $(SRC)
+pdf: $(TEXSRC) $(CSRC)
+	$(ENG) -shell-escape $(TEXSRC)
 	touch pdf
 
 clean:

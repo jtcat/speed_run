@@ -91,9 +91,10 @@ static int valstop(int pos, int speed, int finalpos)
 static int valstep(int pos, int speed)
 {
 	int	end = pos + speed;
-	for (; pos <= end; pos++)
-		if (speed > max_road_speed[pos])
-			return 0;
+	for (; pos <= end && speed <= max_road_speed[pos]; pos++)
+		;
+	if (pos <= end)
+		return 0;
 	return 1;
 }
 

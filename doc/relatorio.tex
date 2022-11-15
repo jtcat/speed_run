@@ -11,6 +11,7 @@
 \usepackage{blindtext}
 \usepackage{color}
 \usepackage{listings}
+\usepackage[T1]{fontenc}
 \usepackage[margin=3cm]{geometry}
 
 \newcommand{\nextyear}{\advance\year by 1 \the\year\advance\year by -1}
@@ -97,8 +98,7 @@ Para verificar passos possíveis, utilizam-se os seguintes métodos:
 Calcular a distância de paragem para cada velocidade possível em cada passo para evitar correr para além do fim do
 trajeto.
 
-Verificar se uma ``passada'' quebra os limites de velocidade das casas
-pelas quais passaria.
+Verificar, a partir do incremento mais alto, se uma ``passada'' não  quebra os limites de velocidade das casas pelas quais passaria.
 
 Feito o passo, a escolha de incremento é guardada num \extrang{array}
 na posição associada ao número do passo. Desta forma, este \extrang{array}

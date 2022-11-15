@@ -81,8 +81,7 @@ static int sum1ton(int n)
 	return n * (n + 1) / 2;
 }
 
-//	Checks if it is possible to stop before or at finalpos going at speed
-//	from pos
+//	Checks if it is possible to stop before or at finalpos going at speed from pos
 static int valstop(int pos, int speed, int finalpos)
 {
 	return (pos + sum1ton(speed)) <= finalpos;

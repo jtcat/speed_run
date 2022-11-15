@@ -4,7 +4,7 @@ ENG= pdflatex
 
 all: clean pdf
 
-pdf: 
+pdf: $(SRC)
 	$(ENG) -shell-escape $(SRC)
 	touch pdf
 

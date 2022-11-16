@@ -191,9 +191,7 @@ static int valstep(int pos, int speed)
 	int	end = pos + speed;
 	for (; pos <= end && speed <= max_road_speed[pos]; pos++)
 		;
-	if (pos <= end)
-		return 0;
-	return 1;
+	return (pos > end);
 }
 
 /*		The solution works by increasing the speed as much as possible
@@ -229,11 +227,11 @@ static void solution_3_dynamic(int final_position)
 mainloop:
 	while (pos != final_position)
 	{
-  		solution_3_count++;
 		for (; incmax >= -1; incmax--)
 		{
 			if (valstop(pos, speed + incmax, final_position) && valstep(pos, speed + incmax))
 		   	{
+  				solution_3_count++;
 		   		// Found valid step, take it
 		   		speed += incmax;
 		   		nextpos = pos + speed;
@@ -267,7 +265,7 @@ static void solve_3(int final_position)
     exit(1);
   }
   solution_3_elapsed_time = cpu_time();
-  solution_3_count = 0;
+  solution_3_count = 0ul;
   solution_3_dynamic(final_position);
   solution_3_elapsed_time = cpu_time() - solution_3_elapsed_time;
 }

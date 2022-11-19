@@ -83,7 +83,6 @@
 %\begin{titlingpage}
 \maketitle
 %\end{titlingpage}
-\setcounter{secnumdepth}{1}
 \section{Introdução}
 Este trabalho tem como objetivo desenvolver algoritmos que sejam capazes
 de encontrar o menor número de passos necessários para resolver o seguinte problema:
@@ -131,11 +130,11 @@ Para verificar passos possíveis, utilizam-se os seguintes métodos:
 
 Calcular a distância de paragem para cada velocidade possível em cada passo para evitar correr para além do fim do
 trajeto:
-\lstinputlisting[firstline=75, lastline=84]{\srcdir/speed\_run.c}
+\lstinputlisting[firstline=176, lastline=186]{\srcdir/speed\_run.c}
 
 Verificar, a partir do incremento mais alto, se uma ``passada'' não  quebra
 os limites de velocidade das casas pelas quais passaria:
-\lstinputlisting[firstline=86, lastline=95]{\srcdir/speed\_run.c}
+\lstinputlisting[firstline=188, lastline=195]{\srcdir/speed\_run.c}
 
 Feito o passo, a escolha de incremento é guardada num \extrang{array}
 na posição associada ao número do passo. Desta forma, este \extrang{array}
@@ -153,6 +152,6 @@ o programa recua novamente, e assim sucessivamente.
 \lstinputlisting[firstline=122, lastline=167]{\srcdir/speed\_run.c}
 \pagebreak
 \subsection{Advance and retreat}
-\lstinputlisting[firstline=170, lastline=284]{\srcdir/speed\_run.c}
+\lstinputlisting[firstline=170, lastline=273]{\srcdir/speed\_run.c}
 
 \end{document}

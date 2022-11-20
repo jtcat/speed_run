@@ -198,6 +198,22 @@ o que equivale a, aproximadamente, \num{2.96874e+154} anos.
 	\vspace{-20pt}
 	\label{fig:original}
 \end{figure}
+
+\subsection{Original Improved}
+\begin{wrapfigure}[10]{r}{0.47\textwidth}
+	\vspace{-13pt}
+	\includegraphics[width=\linewidth]{\matlabdir/Results\_sol2/fitted.png}
+	\caption{Tempos de execução e função exponencial ajustada.}
+	\label{fig:sol2}
+\end{wrapfigure}
+	
+Pelo facto de o algoritmo Original Improved efetuar cálculos em tempos com ordem de grandeza
+\begin{math}10^{-6}\end{math}, foi possível obter um tempo de execução para \begin{math}n = 800\end{math}.
+
+Contudo, os valores até \begin{math}n = 300\end{math} não são fiáveis para ajustar uma reta,
+pois são constituídos, na sua grande parte, por ruído.
+Este é causado pelo script de medição de tempo que, devido a questões de arquitetura,
+não consegue reportar valores temporais tão baixos.
 \pagebreak
 
 \section{Código}

@@ -194,13 +194,14 @@ static int valstep(int pos, int speed)
 	return (pos > end);
 }
 
-/*		The solution works by increasing the speed as much as possible
-	without overstepping the finalpos or breaking any speed limits.
+/*	The solution works by increasing the speed as much as possible
+  without overstepping the finalpos or breaking any speed limits.
 
-		In a move, if any of the those two checks fail, the program attemps to
-	mantain or decrease the speed of the car. If the two checks don't work
-	for any of the possible speeds, the program moves back one step and
-	retries it with the previous speed reduce by one.
+		In a move, if any of the those two checks fail, the program
+  attemps to mantain or decrease the speed of the car. If the two
+  checks don't work for any of the possible speeds, the program
+  moves back one step and retries it with the previous speed reduce
+  by one.
 */
 
 static void solution_3_dynamic(int final_position)

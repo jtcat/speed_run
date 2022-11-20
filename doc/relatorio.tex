@@ -16,6 +16,8 @@
 \usepackage[final]{pdfpages}
 \usepackage{siunitx}
 \usepackage[framed, numbered]{matlab-prettifier}
+\usepackage{wrapfig}
+\usepackage{subcaption}
 
 \newcommand{\nextyear}{\advance\year by 1 \the\year\advance\year by -1}
 
@@ -174,21 +176,27 @@ Assim, utilizando a Curve Fitting Toolbox do MATLAB, obteve-se,
 para o percurso gerado com o número mecanográfico 107927,
 a seguinte equação: \begin{math}y = (\num{6.231e-08})\times e^{0.4869x}\end{math}.
 
-\begin{figure}[h]
-	\includegraphics[width=\linewidth]{\matlabdir/Results\_original/107927\_Original\-and\-fitted.png}
-	\caption{Gráfico com os tempos de execução para o número mecanográfico 107927 e a função exponencial ajustada}
-	\label{fig:800}
-\end{figure}
-
 Possuindo uma função exponencial que se ajusta aos valores obtidos, foi possível,
 portanto, estimar os tempos de execução para \begin{math}n = 800\end{math}.
 Deste modo, o tempo de execução previsto é de \num{9.23397e+161} segundos,
 o que equivale a, aproximadamente, \num{2.96874e+154} anos.
-\pagebreak
+
 \begin{figure}[h]
+	\begin{subfigure}{0.47\textwidth}
+	\includegraphics[width=\linewidth]{\matlabdir/Results\_original/107927\_Original\-and\-fitted.png} 
+	\caption{Tempos de execução obtidos e função exponencial ajustada.}
+	\label{fig:subim1}
+	\end{subfigure}
+	\hspace{0.049\textwidth}
+	\begin{subfigure}{0.47\textwidth}
 	\includegraphics[width=\linewidth]{\matlabdir/Results\_original/107927\_800.png}
-	\caption{Tempo de execução estimado para \begin{math}n = 800\end{math}, utilizando a solução original}
-	\label{fig:800}
+	\caption{Tempo de execução estimado, recorrendo à função ajudada em (a), para \begin{math}n=800\end{math}.}
+	\label{fig:original_800}
+	\end{subfigure}
+	
+	\caption{Tempos de execução para o algoritmo original.}
+	\vspace{-20pt}
+	\label{fig:original}
 \end{figure}
 \pagebreak
 

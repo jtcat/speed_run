@@ -14,6 +14,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[margin=3cm]{geometry}
 \usepackage[final]{pdfpages}
+\usepackage{siunitx}
+\usepackage[framed, numbered]{matlab-prettifier}
 
 \newcommand{\nextyear}{\advance\year by 1 \the\year\advance\year by -1}
 
@@ -69,6 +71,7 @@
 
 \newcommand{\extrang}[1]{\textit{#1}}
 \newcommand{\srcdir}{..}
+\newcommand{\matlabdir}{"../MATLAB fittings"}
 
 \title{\Huge Algoritmos e Estruturas de Dados\vskip .7em
 		\bfseries speed\_run\vskip 1.5em
@@ -90,7 +93,7 @@ de encontrar o menor número de passos necessários para resolver o seguinte pro
 A solução original utiliza uma função recursiva para verificar todas as combinações
 de passos a todas as velocidades possíveis dentro dos limites de cada casa,
 guardando sempre a melhor solução encontrada até ao momento. Esta possui um tempo
-de execução da ordem das centenas de anos para a resolução do caso \begin{math}n = 801\end{math}.
+de execução da ordem das centenas de anos para a resolução do caso \begin{math}n = 800\end{math}.
 Com vista em obter a solução em tempo aceitável, criámos duas soluções capazes de
 o fazer na ordem dos microsegundos. A primeira altera apenas ligeiramente a
 solução original. A segunda é não recursiva e utiliza o princípio da solução anterior com
@@ -147,11 +150,46 @@ o programa recua novamente, e assim sucessivamente.
 \section{PDFs de soluções}
 \includepdf[pages=-, angle=90]{800_2.pdf}
 \includepdf[pages=-, angle=90]{800_3.pdf}
+
+\section{Tempos de execução e estimativas}
+\subsection{Original}
+Devido à complexidade do algoritmo, não foi possível obter tempos de execução para \begin{math}n = 800\end{math},
+pelo que foi necessário recorrer a estimativas, utilizando o MATLAB.
+
+Em primeiro lugar, procedeu-se ao ajuste de uma função exponencial aos tempos obtidos
+até \begin{math}n = 50\end{math}.
+Dado o enorme salto existente de \begin{math}n = 50\end{math} para \begin{math}n = 55\end{math},
+a função a ajustar teria de ser do tipo \begin{math}a\times e^{bx}\end{math}.
+Assim, utilizando a Curve Fitting Toolbox do MATLAB, obteve-se,
+para o percurso gerado com o número mecanográfico 107927,
+a seguinte equação: \begin{math}y = (\num{6.231e-08})\times e^{0.4869}\end{math}.
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{\matlabdir/Results/107927\_Original\-and\-fitted.png}
+	\caption{Gráfico com os tempos de execução para o número mecanográfico 107927 e a função exponencial ajustada}
+	\label{fig:800}
+\end{figure}
+
+Possuindo uma função exponencial que se ajusta aos valores obtidos, foi possível,
+portanto, estimar os tempos de execução para \begin{math}n = 800\end{math}.
+Deste modo, o tempo de execução previsto é de \num{9.23397e+161} segundos,
+o que equivale a, aproximadamente, \num{2.96874e+154} anos.
+\pagebreak
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{\matlabdir/Results/107927\_800.png}
+	\caption{Tempo de execução estimado para \begin{math}n = 800\end{math}, utilizando a solução original}
+	\label{fig:800}
+\end{figure}
+\pagebreak
+
 \section{Código}
 \subsection{Original Improved}
 \lstinputlisting[firstline=122, lastline=167]{\srcdir/speed\_run.c}
 \pagebreak
 \subsection{Advance and retreat}
 \lstinputlisting[firstline=170, lastline=273]{\srcdir/speed\_run.c}
+\subsection{Ajuste dos dados obtidos utilizando o MATLAB}
+\lstinputlisting[firstline=5, lastline=31, style=Matlab-editor, numbers=none, basicstyle=\small\ttfamily]{\matlabdir/speed\_run.m}
+
 
 \end{document}

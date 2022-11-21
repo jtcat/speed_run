@@ -200,7 +200,7 @@ o que equivale a, aproximadamente, \num{2.96874e+154} anos.
 \end{figure}
 
 \subsection{Original Improved}
-\begin{wrapfigure}[10]{r}{0.47\textwidth}
+\begin{wrapfigure}[14]{r}{0.47\textwidth}
 	\vspace{-13pt}
 	\includegraphics[width=\linewidth]{\matlabdir/Results\_sol2/fitted.png}
 	\caption{Tempos de execução e função exponencial ajustada.}
@@ -214,6 +214,9 @@ Contudo, os valores até \begin{math}n = 300\end{math} não são fiáveis para a
 pois são constituídos, na sua grande parte, por ruído.
 Este é causado pelo script de medição de tempo que, devido a questões de arquitetura,
 não consegue reportar valores temporais tão baixos.
+
+A reta de ajuste foi obtida através da Curve Fitting Toolbox do MATLAB, ao qual se determinou
+a sua equação \begin{math}y=(\num{4.341e-09})x+(\num{1.151e-06})\end{math}.
 \pagebreak
 
 \section{Código}

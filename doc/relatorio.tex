@@ -218,6 +218,20 @@ não consegue reportar valores temporais tão baixos.
 A reta de ajuste foi obtida através da Curve Fitting Toolbox do MATLAB, ao qual se determinou
 a sua equação \begin{math}y=(\num{4.341e-09})x+(\num{1.151e-06})\end{math}.
 \pagebreak
+\subsection{Advance and retreat}
+Tal como a solução anterior, o algoritmo Advance and retreat efetua cálculos em tempos bastante baixos
+(ordem de grandeza \begin{math}10^{-6}\end{math}), até \begin{math}n = 800\end{math}.
+Assim, os valores iniciais de \begin{math}n\end{math} constituem igualmente ruído.
+
+A reta de ajuste foi obtida através da Curve Fitting Toolbox do MATLAB, ao qual se determinou
+a sua equação \begin{math}y=(\num{8.001e-09})x+(\num{1.912e-06})\end{math}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{\matlabdir/Results\_sol3/fitted.png}
+	\caption{Tempos de execução e função exponencial ajustada.}
+	\label{fig:sol2}
+\end{figure}
+\pagebreak
 
 \section{Código}
 \subsection{Original Improved}

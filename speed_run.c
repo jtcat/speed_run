@@ -28,6 +28,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "elapsed_time.h"
 #include "make_custom_pdf.c"
 
@@ -71,6 +72,7 @@ solution_t;
 // the (very inefficient) recursive solution given to the students
 //
 
+#ifdef SOL1
 static solution_t solution_1,solution_1_best;
 static double solution_1_elapsed_time; // time it took to solve the problem
 static unsigned long solution_1_count; // effort dispended solving the problem
@@ -117,7 +119,9 @@ static void solve_1(int final_position)
   solution_1_recursion(0,0,0,final_position);
   solution_1_elapsed_time = cpu_time() - solution_1_elapsed_time;
 }
+#endif
 
+#ifndef SOL2
 //	Sum 1 to n: stopping distance going at speed n
 static int sum1ton(int n)
 {
@@ -129,7 +133,9 @@ static int valstop(int pos, int speed, int finalpos)
 {
 	return (pos + sum1ton(speed)) <= finalpos;
 }
+#endif
 
+#ifdef SOL2
 //
 // Improved version of original recursive func
 
@@ -176,11 +182,13 @@ static void solve_2(int final_position)
   solution_2_recursion(0,0,0,final_position);
   solution_2_elapsed_time = cpu_time() - solution_2_elapsed_time;
 }
+#endif
 
 //
 // Dynamic solution
 //
 
+#ifdef SOL3
 static solution_t solution_3;
 static double solution_3_elapsed_time; // time it took to solve the problem
 static unsigned long solution_3_count; // effort dispended solving the problem
@@ -270,7 +278,14 @@ static void solve_3(int final_position)
   solution_3_dynamic(final_position);
   solution_3_elapsed_time = cpu_time() - solution_3_elapsed_time;
 }
+#endif
 
+
+//
+// Combined Solution
+//
+
+#ifdef SOL4
 static solution_t solution_4;
 static double solution_4_elapsed_time; // time it took to solve the problem
 static unsigned long solution_4_count; // effort dispended solving the problem
@@ -314,28 +329,7 @@ static void solve_4(int final_position)
   solution_4_recursion(0,0,0,final_position);
   solution_4_elapsed_time = cpu_time() - solution_4_elapsed_time;
 }
-//
-// example of the slides
-//
-
-static void example(void)
-{
-  int i,final_position;
-
-  srandom(0xAED2022);
-  init_road_speeds();
-  final_position = 30;
-  solve_1(final_position);
-  make_custom_pdf_file("example.pdf",final_position,&max_road_speed[0],solution_1_best.n_moves,&solution_1_best.positions[0],solution_1_elapsed_time,solution_1_count,"Plain recursion");
-  printf("mad road speeds:");
-  for(i = 0;i <= final_position;i++)
-    printf(" %d",max_road_speed[i]);
-  printf("\n");
-  printf("positions:");
-  for(i = 0;i <= solution_1_best.n_moves;i++)
-    printf(" %d",solution_1_best.positions[i]);
-  printf("\n");
-}
+#endif 
 
 
 //
@@ -346,32 +340,27 @@ int main(int argc,char *argv[argc + 1])
 {
 # define _time_limit_  15.0
   int n_mec,final_position,print_this_one;
-  char file_name[64];
 
-  // generate the example data
-  if(argc == 2 && argv[1][0] == '-' && argv[1][1] == 'e' && argv[1][2] == 'x')
-  {
-    example();
-    return 0;
-  }
+#ifdef _print_pdf_
+  char file_name[64];
+#endif
+
   // initialization
   n_mec = (argc < 2) ? 0xAED2022 : atoi(argv[1]);
   srandom((unsigned int)n_mec);
   init_road_speeds();
   // run all solution methods for all interesting sizes of the problem
   final_position = 1;
-  solution_1_elapsed_time = 0.0;
-  #define PDF_SRC "./doc"
-  #define FILENAME(num) sprintf(file_name,PDF_SRC "/%03d_" #num ".pdf",final_position);
-  printf("    + --- ---------------- --------- +\n");
-  printf("    |                plain recursion |\n");
-  printf("--- + --- ---------------- --------- +\n");
-  printf("  n | sol            count  cpu time |\n");
-  printf("--- + --- ---------------- --------- +\n");
+  #define PDF_SRC "."
+//  printf("    + --- ---------------- --------- +\n");
+//  printf("    |                plain recursion |\n");
+//  printf("--- + --- ---------------- --------- +\n");
+//  printf("  n | sol            count  cpu time |\n");
+//  printf("--- + --- ---------------- --------- +\n");
   while(final_position <= _max_road_size_/* && final_position <= 20*/)
   {
     print_this_one = (final_position == 10 || final_position == 20 || final_position == 50 || final_position == 100 || final_position == 200 || final_position == 400 || final_position == 800) ? 1 : 0;
-    printf("%3d |",final_position);
+    printf("%d ",final_position);
     // first solution method (very bad)
 //    if(solution_1_elapsed_time < _time_limit_)
 //    {
@@ -388,6 +377,15 @@ int main(int argc,char *argv[argc + 1])
 //      solution_1_best.n_moves = -1;
 //      printf("                                |");
 //    }
+//
+//
+#define PRINTLINE(num)\
+	printf("%d %lu %.3e",solution_ ## num.n_moves,solution_ ## num ## _count,solution_ ## num ## _elapsed_time);
+
+#define PRINT_PDF(num,title)\
+	sprintf(file_name,PDF_SRC "/%03d_" #num ".pdf",final_position);\
+	make_custom_pdf_file(file_name,final_position,&max_road_speed[0],solution_ ## num.n_moves,&solution_ ## num.positions[0],solution_ ## num ## _elapsed_time,solution_ ## num ## _count, title);
+
 #ifdef SOL2
     // second solution method (less bad)
     if(solution_2_elapsed_time < _time_limit_)
@@ -395,10 +393,11 @@ int main(int argc,char *argv[argc + 1])
       solve_2(final_position);
       if(print_this_one != 0)
       {
-		FILENAME(2)
-        make_custom_pdf_file(file_name,final_position,&max_road_speed[0],solution_2.n_moves,&solution_2.positions[0],solution_2_elapsed_time,solution_2_count,"Optimized recursion");
+		#ifdef _print_pdf_
+		PRINT_PDF(2, "Optimized Recursion")
+		#endif
       }
-      printf(" %3d %16lu %9.3e |",solution_2.n_moves,solution_2_count,solution_2_elapsed_time);
+	  PRINTLINE(2)
     }
     else
     {
@@ -414,10 +413,11 @@ int main(int argc,char *argv[argc + 1])
       solve_3(final_position);
       if(print_this_one != 0)
       {
-		FILENAME(3)
-        make_custom_pdf_file(file_name,final_position,&max_road_speed[0],solution_3.n_moves,&solution_3.positions[0],solution_3_elapsed_time,solution_3_count,"Dynamic(?) solution");
+		#ifdef _print_pdf_
+		PRINT_PDF(3, "Dynamic (?) Solution")
+		#endif
       }
-      printf(" %3d %16lu %13.3e |",solution_3.n_moves,solution_3_count,solution_3_elapsed_time);
+	  PRINTLINE(3)
     }
     else
     {
@@ -433,10 +433,11 @@ int main(int argc,char *argv[argc + 1])
       solve_4(final_position);
       if(print_this_one != 0)
       {
-		FILENAME(4)
-        make_custom_pdf_file(file_name,final_position,&max_road_speed[0],solution_4.n_moves,&solution_4.positions[0],solution_4_elapsed_time,solution_4_count,"Dynamic(?) solution");
+		#ifdef _print_pdf_
+		PRINT_PDF(4, "Combined Solution")
+		#endif
       }
-      printf(" %3d %16lu %9.3e |",solution_4.n_moves,solution_4_count,solution_4_elapsed_time);
+	  PRINTLINE(4)
     }
     else
     {
@@ -458,7 +459,7 @@ int main(int argc,char *argv[argc + 1])
     else
       final_position += 20;
   }
-  printf("--- + --- ---------------- --------- +\n");
+//  printf("--- + --- ---------------- --------- +\n");
   return 0;
 # undef _time_limit_
 }

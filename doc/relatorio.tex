@@ -155,12 +155,17 @@ Quando um passo é impossível de executar a qualquer das velocidades possíveis
 passo, o algoritmo recua um passo e tenta reduzir o incremento de velocidade até que
 consiga avançar novamente. Não sendo possível avançar com nenhum dos incrementos,
 o programa recua novamente, e assim sucessivamente.
+\subsection{Combined}
+Some text here
 \pagebreak
+
 \section{PDFs de soluções}
 \subsection{Original Improved}
 \includegraphics[width=\textwidth]{800_2.pdf}
 \subsection{Advance and retreat}
 \includegraphics[width=\textwidth]{800_3.pdf}
+\subsection{Combined}
+\includegraphics[width=\textwidth]{800_4.pdf}
 \pagebreak
 
 \section{Tempos de execução e estimativas}
@@ -231,6 +236,9 @@ a sua equação \begin{math}y=(\num{8.001e-09})x+(\num{1.912e-06})\end{math}.
 	\caption{Tempos de execução e função exponencial ajustada.}
 	\label{fig:sol2}
 \end{figure}
+
+\subsection{Combined}
+Some text here
 \pagebreak
 
 \section{Código}
@@ -241,6 +249,7 @@ a sua equação \begin{math}y=(\num{8.001e-09})x+(\num{1.912e-06})\end{math}.
 \lstinputlisting[firstline=172, lastline=272]{\srcdir/speed\_run.c}
 \subsection{Ajuste dos dados obtidos utilizando o MATLAB}
 \lstinputlisting[firstline=5, lastline=31, style=Matlab-editor, numbers=none, basicstyle=\small\ttfamily]{\matlabdir/speed\_run.m}
-
+\subsection{Combined}
+Code here
 
 \end{document}

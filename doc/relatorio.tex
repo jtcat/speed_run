@@ -119,19 +119,18 @@ geram alterações significativas no seu comportamento.
 
 Em primeiro lugar, é introduzido controlo de fluxo através de um valor de retorno
 \extrang{boolean} (implementado como inteiro).
-\lstinputlisting[linerange={78-81}]{\srcdir/speed\_run.c}
+\lstinputlisting[linerange={167-169}]{\srcdir/speed\_run.c}
 Se uma sequência de chamadas recursivas chegar a uma solução, a última chamada
-retorna 1. \lstinputlisting[linerange={88-97}]{\srcdir/speed\_run.c}
+retorna 1. \lstinputlisting[linerange={166-167}]{\srcdir/speed\_run.c}
 Se for este o caso, as chamadas anteriores retornarão também 1.
 Isto significa que o programa grava apenas a primeira solução que encontrar.
-\pagebreak
-\lstinputlisting[linerange={107-109}]{\srcdir/speed\_run.c}
+\lstinputlisting[linerange={153-158}]{\srcdir/speed\_run.c}
 Tendo isto, torna-se imperativo que o programa encontre a melhor solução possível
 à primeira tentativa. Isto implica que o ``carro'' se mova o mais rápido possível
 em qualquer passo para obter o menor número de passos. A segunda alteração
 garante essa condição ao fazer com que o programa itere
 desde as maiores velocidades para as menores.
-\lstinputlisting[linerange={99-100}]{\srcdir/speed\_run.c}
+\lstinputlisting[linerange={163-164}]{\srcdir/speed\_run.c}
 
 \subsection{Advance and retreat}
 Este algoritmo foi feito de raiz. Tem como
@@ -142,11 +141,11 @@ Para verificar passos possíveis, utilizam-se os seguintes métodos:
 
 Calcular a distância de paragem para cada velocidade possível em cada passo para evitar correr para além do fim do
 trajeto:
-\lstinputlisting[firstline=176, lastline=186]{\srcdir/speed\_run.c}
+\lstinputlisting[firstline=125, lastline=135]{\srcdir/speed\_run.c}
 
 Verificar, a partir do incremento mais alto, se uma ``passada'' não  quebra
 os limites de velocidade das casas pelas quais passaria:
-\lstinputlisting[firstline=188, lastline=195]{\srcdir/speed\_run.c}
+\lstinputlisting[firstline=196, lastline=203]{\srcdir/speed\_run.c}
 
 Feito o passo, a escolha de incremento é guardada num \extrang{array}
 na posição associada ao número do passo. Desta forma, este \extrang{array}
@@ -155,6 +154,7 @@ Quando um passo é impossível de executar a qualquer das velocidades possíveis
 passo, o algoritmo recua um passo e tenta reduzir o incremento de velocidade até que
 consiga avançar novamente. Não sendo possível avançar com nenhum dos incrementos,
 o programa recua novamente, e assim sucessivamente.
+\pagebreak
 \subsection{Combined}
 Some text here
 \pagebreak

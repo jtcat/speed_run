@@ -5,3 +5,4 @@ doc/[0-9][0-9][0-9]_[0-9].pdf
 doc/pdf
 speed_run
 speed_run_[0-9]
+*.asv

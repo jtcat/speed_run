@@ -199,7 +199,7 @@ o que equivale a, aproximadamente, \num{2.96874e+154} anos.
 	\label{fig:original_800}
 	\end{subfigure}
 	
-	\caption{Tempos de execução para o algoritmo original.}
+	\caption{Dados do algoritmo original, para o número mecanográfico 107927.}
 	\vspace{-20pt}
 	\label{fig:original}
 \end{figure}
@@ -215,30 +215,46 @@ o que equivale a, aproximadamente, \num{2.96874e+154} anos.
 Pelo facto de o algoritmo Original Improved efetuar cálculos em tempos com ordem de grandeza
 \begin{math}10^{-6}\end{math}, foi possível obter um tempo de execução para \begin{math}n = 800\end{math}.
 
-Contudo, os valores até \begin{math}n = 300\end{math} não são fiáveis para ajustar uma reta,
+Contudo, os valores até \begin{math}n = 60\end{math} não são fiáveis para ajustar uma reta,
 pois são constituídos, na sua grande parte, por ruído.
 Este é causado pelo script de medição de tempo que, devido a questões de arquitetura,
 não consegue reportar valores temporais tão baixos.
 
 A reta de ajuste foi obtida através da Curve Fitting Toolbox do MATLAB, ao qual se determinou
-a sua equação \begin{math}y=(\num{4.341e-09})x+(\num{1.151e-06})\end{math}.
+a sua equação \begin{math}y=(\num{1.069e-08})x+(\num{9.515e-07})\end{math}.
 \pagebreak
 \subsection{Advance and retreat}
+\begin{wrapfigure}[12]{r}{0.47\textwidth}
+	\vspace{-13pt}
+	\includegraphics[width=\linewidth]{\matlabdir/Results\_sol3/fitted.png}
+	\caption{Tempos de execução e função exponencial ajustada.}
+	\label{fig:sol3}
+\end{wrapfigure}
 Tal como a solução anterior, o algoritmo Advance and retreat efetua cálculos em tempos bastante baixos
 (ordem de grandeza \begin{math}10^{-6}\end{math}), até \begin{math}n = 800\end{math}.
 Assim, os valores iniciais de \begin{math}n\end{math} constituem igualmente ruído.
 
-A reta de ajuste foi obtida através da Curve Fitting Toolbox do MATLAB, ao qual se determinou
-a sua equação \begin{math}y=(\num{8.001e-09})x+(\num{1.912e-06})\end{math}.
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.5\linewidth]{\matlabdir/Results\_sol3/fitted.png}
-	\caption{Tempos de execução e função exponencial ajustada.}
-	\label{fig:sol2}
-\end{figure}
+A reta de ajuste tem equação \begin{math}y=(\num{7.464e-09})x+(\num{7.920e-07})\end{math}.
+
+Este algoritmo é o mais eficiente, já que o declive da reta ajustada é o mais baixo
+(ordem de grandeza \begin{math}10^{-9}\end{math}), quando comparado com os
+declives dos outros algoritmos (ordem de grandeza \begin{math}10^{-8}\end{math}).
+\\\\\\
 
 \subsection{Combined}
-Some text here
+\begin{wrapfigure}[12]{r}{0.47\textwidth}
+	\vspace{-13pt}
+	\includegraphics[width=\linewidth]{\matlabdir/Results\_sol4/fitted.png}
+	\caption{Tempos de execução e função exponencial ajustada.}
+	\label{fig:sol4}
+\end{wrapfigure}
+Pela mesma razão das soluções anteriores, o algoritmo Combined também efetua cálculos em tempos bastante
+baixos, pelo que os valores iniciais de \begin{math}n\end{math} são considerados, mais uma vez, ruído.
+
+A reta de ajuste tem equação \begin{math}y=(\num{1.081e-08})x+(\num{7.594e-07})\end{math}.
+
+Apesar da alteração efetuada neste algoritmo, o decive da reta de ajuste é aproximadamente igual ao da
+solução Original Improved. Assim, este algoritmo não é mais eficiente do que o Original Improved.
 \pagebreak
 
 \section{Código}

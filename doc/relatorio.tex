@@ -90,8 +90,16 @@
 \maketitle
 %\end{titlingpage}
 \section{Introdução}
-Este trabalho tem como objetivo desenvolver algoritmos que sejam capazes
-de encontrar o menor número de passos necessários para resolver o seguinte problema:
+Este trabalho consiste em desenvolver algoritmos capazes de resolver o seguinte problema:
+
+Uma estrada encontra-se dividida em vários segmentos de igual tamanho, cada um com uma velocidade pré-definida.
+O objetivo deste problema é encontrar o menor número de passos necessários para percorrer a estrada, começando no primeiro segmento e terminando no último, com velocidade 1.
+
+Em cada passo, é possível avançar para os segmentos seguintes, com velocidade igual à velocidade de chegada ao segmento atual
+ou inferior/superior à velocidade atual em 1 unidade.
+Contudo, em cada iteração, deve-se verificar se a velocidade de partida é igual ou inferior à velocidade dos segmentos seguintes.
+Caso a velocidade atual seja 1, não é possível reduzir a velocidade.
+
 \section{Soluções}
 A solução original utiliza uma função recursiva para verificar todas as combinações
 de passos a todas as velocidades possíveis dentro dos limites de cada casa,
@@ -154,7 +162,6 @@ Quando um passo é impossível de executar a qualquer das velocidades possíveis
 passo, o algoritmo recua um passo e tenta reduzir o incremento de velocidade até que
 consiga avançar novamente. Não sendo possível avançar com nenhum dos incrementos,
 o programa recua novamente, e assim sucessivamente.
-\pagebreak
 \subsection{Combined}
 Some text here
 \pagebreak

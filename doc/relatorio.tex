@@ -97,10 +97,10 @@ A solução original utiliza uma função recursiva para verificar todas as comb
 de passos a todas as velocidades possíveis dentro dos limites de cada casa,
 guardando sempre a melhor solução encontrada até ao momento. Esta possui um tempo
 de execução com ordem de grandeza \begin{math}10^{154}\end{math} (em anos) para a resolução do caso \begin{math}n = 800\end{math}.
-Com vista em obter a solução em tempo aceitável, criámos duas soluções capazes de
+Com vista em obter a solução em tempo aceitável, criámos três soluções capazes de
 o fazer na ordem dos microsegundos. A primeira altera apenas ligeiramente a
-solução original. A segunda é não recursiva e utiliza o princípio da solução anterior com
-algumas optimizações.
+solução original, enquanto que a segunda é não recursiva e utiliza o princípio da solução anterior com
+algumas optimizações. A terceira combina as duas soluções anteriores.
 \subsection{Original}
 A solução dada é uma solução recursiva que itera sobre todas as possibilidades de
 percurso, guardando a melhor solução até ao momento.

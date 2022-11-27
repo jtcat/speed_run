@@ -165,7 +165,11 @@ consiga avançar novamente. Não sendo possível avançar com nenhum dos increme
 o programa recua novamente, e assim sucessivamente.
 \lstinputlisting[firstline=263, lastline=265]{\srcdir/speed\_run.c}
 \subsection{Combined}
-Some text here
+O algoritmo Combined é, na sua grande parte, idêntico ao algoritmo Original Improved.
+Contudo, ao invés de, no ciclo \verb#for#, existir uma verificação da posição final através da expressão \extrang{boolean}
+\verb#position + new_speed <= final_position#,
+utilizou-se a função \verb#valstop(position, new_speed, final_position)#, presente no algoritmo Advance and retreat.
+\lstinputlisting[firstline=307, lastline=316]{\srcdir/speed\_run.c}
 \pagebreak
 
 \section{PDFs de soluções}

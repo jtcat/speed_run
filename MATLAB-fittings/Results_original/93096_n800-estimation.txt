@@ -1,0 +1,1 @@
+Time needed to solve the problem, with size 800: 5.553449e+165 seconds or 1.785445e+158 years

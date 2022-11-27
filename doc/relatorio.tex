@@ -158,10 +158,12 @@ os limites de velocidade das casas pelas quais passaria:
 Feito o passo, a escolha de incremento é guardada num \extrang{array}
 na posição associada ao número do passo. Desta forma, este \extrang{array}
 guarda as escolhas feitas até ao passo atual.
+\lstinputlisting[firstline=217, lastline=231]{\srcdir/speed\_run.c}
 Quando um passo é impossível de executar a qualquer das velocidades possíveis nesse
 passo, o algoritmo recua um passo e tenta reduzir o incremento de velocidade até que
 consiga avançar novamente. Não sendo possível avançar com nenhum dos incrementos,
 o programa recua novamente, e assim sucessivamente.
+\lstinputlisting[firstline=263, lastline=265]{\srcdir/speed\_run.c}
 \subsection{Combined}
 Some text here
 \pagebreak

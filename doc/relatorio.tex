@@ -186,18 +186,13 @@ utilizou-se a função \verb#valstop(position, new_speed, final_position)#, pres
 Devido à complexidade do algoritmo, não foi possível obter tempos de execução para \begin{math}n = 800\end{math},
 pelo que foi necessário recorrer a estimativas, utilizando o MATLAB.
 
-Em primeiro lugar, procedeu-se ao ajuste de uma função exponencial aos tempos obtidos
-até \begin{math}n = 50\end{math}.
-Dado o enorme salto existente de \begin{math}n = 50\end{math} para \begin{math}n = 55\end{math},
-a função a ajustar teria de ser do tipo \begin{math}a\times e^{bx}\end{math}.
-Assim, utilizando a Curve Fitting Toolbox do MATLAB, obteve-se,
-para o percurso gerado com o número mecanográfico 107927,
-a seguinte equação: \begin{math}y = (\num{6.231e-08})\times e^{0.4869x}\end{math}.
+Procedeu-se ao ajuste de uma curva do tipo \begin{math}a\times e^{bx}\end{math}
+aos tempos obtidos até uma hora, utilizando a Curve Fitting Toolbox do MATLAB.
+De seguida, foi calculado o tempo de execução para \begin{math}n = 800\end{math}
+através da equação exponencial determinada anteriormente.
 
-Possuindo uma função exponencial que se ajusta aos valores obtidos, foi possível,
-portanto, estimar os tempos de execução para \begin{math}n = 800\end{math}.
-Deste modo, o tempo de execução previsto é de \num{9.23397e+161} segundos,
-o que equivale a, aproximadamente, \num{2.96874e+154} anos.
+Para o número mecanográfico 107927, obteve-se a equação \begin{math}y = (\num{6.231e-08})\times e^{0.4869x}\end{math}
+e uma previsão de \num{9.234e+161} segundos para \begin{math}n = 800\end{math}, o que equivale a, aproximadamente, \num{2.969e+154} anos.
 
 \begin{figure}[h]
 	\begin{subfigure}{0.47\textwidth}
@@ -213,18 +208,52 @@ o que equivale a, aproximadamente, \num{2.96874e+154} anos.
 	\end{subfigure}
 	
 	\caption{Dados do algoritmo original, para o número mecanográfico 107927.}
+	\label{fig:original107927}
+\end{figure}
+
+Para o número mecanográfico 93096, obteve-se a equação \begin{math}y = (\num{1.36e-08})\times e^{0.4997x}\end{math}
+e uma previsão de \num{5.553e+165} segundos para \begin{math}n = 800\end{math}, o que equivale a, aproximadamente, \num{1.785e+158} anos.
+
+\begin{figure}[h]
+	\begin{subfigure}{0.47\textwidth}
+	\includegraphics[width=\linewidth]{\matlabdir/Results\_original/93096\_Original\-and\-fitted.png} 
+	\caption{Tempos de execução obtidos e função exponencial ajustada.}
+	\label{fig:subim1}
+	\end{subfigure}
+	\hspace{0.049\textwidth}
+	\begin{subfigure}{0.47\textwidth}
+	\includegraphics[width=0.937\linewidth]{\matlabdir/Results\_original/93096\_800.png}
+	\caption{Tempo de execução estimado, recorrendo à função ajudada em (a), para \begin{math}n=800\end{math}.}
+	\label{fig:original_800}
+	\end{subfigure}
+	
+	\caption{Dados do algoritmo original, para o número mecanográfico 93096.}
 	\vspace{-20pt}
-	\label{fig:original}
+	\label{fig:original93096}
+\end{figure}
+
+\pagebreak
+Para o número mecanográfico 107283, obteve-se a equação \begin{math}y = (\num{2.177e-08})\times e^{0.4892x}\end{math}
+e uma previsão de \num{2.089e+162} segundos para \begin{math}n = 800\end{math}, o que equivale a, aproximadamente, \num{6.715e+154} anos.
+
+\begin{figure}[h]
+	\begin{subfigure}{0.47\textwidth}
+	\includegraphics[width=\linewidth]{\matlabdir/Results\_original/107283\_Original\-and\-fitted.png} 
+	\caption{Tempos de execução obtidos e função exponencial ajustada.}
+	\label{fig:subim1}
+	\end{subfigure}
+	\hspace{0.049\textwidth}
+	\begin{subfigure}{0.47\textwidth}
+	\includegraphics[width=0.961\linewidth]{\matlabdir/Results\_original/107283\_800.png}
+	\caption{Tempo de execução estimado, recorrendo à função ajudada em (a), para \begin{math}n=800\end{math}.}
+	\label{fig:original_800}
+	\end{subfigure}
+	
+	\caption{Dados do algoritmo original, para o número mecanográfico 107283.}
+	\label{fig:original107283}
 \end{figure}
 
 \subsection{Original Improved}
-\begin{wrapfigure}[14]{r}{0.47\textwidth}
-	\vspace{-13pt}
-	\includegraphics[width=\linewidth]{\matlabdir/Results\_sol2/fitted.png}
-	\caption{Tempos de execução e função exponencial ajustada.}
-	\label{fig:sol2}
-\end{wrapfigure}
-	
 Pelo facto de o algoritmo Original Improved efetuar cálculos em tempos com ordem de grandeza
 \begin{math}10^{-6}\end{math}, foi possível obter um tempo de execução para \begin{math}n = 800\end{math}.
 
@@ -233,16 +262,17 @@ pois são constituídos, na sua grande parte, por ruído.
 Este é causado pelo script de medição de tempo que, devido a questões de arquitetura,
 não consegue reportar valores temporais tão baixos.
 
-A reta de ajuste foi obtida através da Curve Fitting Toolbox do MATLAB, ao qual se determinou
-a sua equação \begin{math}y=(\num{1.069e-08})x+(\num{9.515e-07})\end{math}.
-\pagebreak
-\subsection{Advance and retreat}
-\begin{wrapfigure}[12]{r}{0.47\textwidth}
-	\vspace{-13pt}
-	\includegraphics[width=\linewidth]{\matlabdir/Results\_sol3/fitted.png}
+A reta de ajuste obtida tem equação \begin{math}y=(\num{1.069e-08})x+(\num{9.515e-07})\end{math}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{\matlabdir/Results\_sol2/fitted.png}
 	\caption{Tempos de execução e função exponencial ajustada.}
-	\label{fig:sol3}
-\end{wrapfigure}
+	\label{fig:sol2}
+\end{figure}
+\pagebreak
+
+\subsection{Advance and retreat}
 Tal como a solução anterior, o algoritmo Advance and retreat efetua cálculos em tempos bastante baixos
 (ordem de grandeza \begin{math}10^{-6}\end{math}), até \begin{math}n = 800\end{math}.
 Assim, os valores iniciais de \begin{math}n\end{math} constituem igualmente ruído.
@@ -252,15 +282,15 @@ A reta de ajuste tem equação \begin{math}y=(\num{7.464e-09})x+(\num{7.920e-07}
 Este algoritmo é o mais eficiente, já que o declive da reta ajustada é o mais baixo
 (ordem de grandeza \begin{math}10^{-9}\end{math}), quando comparado com os
 declives dos outros algoritmos (ordem de grandeza \begin{math}10^{-8}\end{math}).
-\\\\\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{\matlabdir/Results\_sol3/fitted.png}
+	\caption{Tempos de execução e função exponencial ajustada.}
+	\label{fig:sol3}
+\end{figure}
 
 \subsection{Combined}
-\begin{wrapfigure}[12]{r}{0.47\textwidth}
-	\vspace{-13pt}
-	\includegraphics[width=\linewidth]{\matlabdir/Results\_sol4/fitted.png}
-	\caption{Tempos de execução e função exponencial ajustada.}
-	\label{fig:sol4}
-\end{wrapfigure}
 Pela mesma razão das soluções anteriores, o algoritmo Combined também efetua cálculos em tempos bastante
 baixos, pelo que os valores iniciais de \begin{math}n\end{math} são considerados, mais uma vez, ruído.
 
@@ -268,6 +298,13 @@ A reta de ajuste tem equação \begin{math}y=(\num{1.081e-08})x+(\num{7.594e-07}
 
 Apesar da alteração efetuada neste algoritmo, o decive da reta de ajuste é aproximadamente igual ao da
 solução Original Improved. Assim, este algoritmo tem a mesma eficiência do algoritmo Original Improved.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{\matlabdir/Results\_sol4/fitted.png}
+	\caption{Tempos de execução e função exponencial ajustada.}
+	\label{fig:sol4}
+\end{figure}
 \pagebreak
 
 \section{Código}

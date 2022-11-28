@@ -2,15 +2,19 @@ CSRCDIR= ..
 
 CSRC= $(addprefix $(CSRCDIR)/,speed_run.c)
 
+DOC=relatorio.pdf
+
 TEXSRC= relatorio.tex
 
 ENG= pdflatex
 
 all: clean pdf
 
-pdf: $(TEXSRC) $(CSRC)
+$(DOC):
+
+pdf: $(DOC) $(TEXSRC) $(CSRC)
 	$(ENG) -shell-escape $(TEXSRC)
-	touch pdf
+	$(ENG) -shell-escape $(TEXSRC)
 
 clean:
-	rm -f *.toc *.lof *.aux *.blg *.out *.xml *.bbl *.log *-blx.bib
+	rm -f $(DOC) *.toc *.lof *.aux *.blg *.out *.xml *.bbl *.log *-blx.bib

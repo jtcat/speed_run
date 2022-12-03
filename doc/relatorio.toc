@@ -1,0 +1,21 @@
+\babel@toc {portuguese}{}\relax 
+\contentsline {section}{\numberline {1}Introdução}{2}{}%
+\contentsline {section}{\numberline {2}Soluções}{2}{}%
+\contentsline {subsection}{\numberline {2.1}Original}{2}{}%
+\contentsline {subsection}{\numberline {2.2}Original Improved}{2}{}%
+\contentsline {subsection}{\numberline {2.3}Advance and retreat}{3}{}%
+\contentsline {subsection}{\numberline {2.4}Combined}{4}{}%
+\contentsline {section}{\numberline {3}PDFs de soluções}{5}{}%
+\contentsline {subsection}{\numberline {3.1}Original Improved}{5}{}%
+\contentsline {subsection}{\numberline {3.2}Advance and retreat}{5}{}%
+\contentsline {subsection}{\numberline {3.3}Combined}{6}{}%
+\contentsline {section}{\numberline {4}Tempos de execução e estimativas}{7}{}%
+\contentsline {subsection}{\numberline {4.1}Original}{7}{}%
+\contentsline {subsection}{\numberline {4.2}Original Improved}{8}{}%
+\contentsline {subsection}{\numberline {4.3}Advance and retreat}{9}{}%
+\contentsline {subsection}{\numberline {4.4}Combined}{9}{}%
+\contentsline {section}{\numberline {5}Código}{10}{}%
+\contentsline {subsection}{\numberline {5.1}Original Improved}{10}{}%
+\contentsline {subsection}{\numberline {5.2}Advance and retreat}{11}{}%
+\contentsline {subsection}{\numberline {5.3}Combined}{13}{}%
+\contentsline {subsection}{\numberline {5.4}Ajuste dos dados obtidos utilizando o MATLAB}{14}{}%

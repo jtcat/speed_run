@@ -105,12 +105,12 @@ A solução original utiliza uma função recursiva para verificar todas as comb
 de passos a todas as velocidades possíveis dentro dos limites de cada casa,
 guardando sempre a melhor solução encontrada até ao momento. Esta possui um tempo
 de execução com ordem de grandeza \begin{math}10^{154}\end{math} (em anos) para a resolução do caso \begin{math}n = 800\end{math}.
-Com vista em obter a solução em tempo aceitável, criámos três soluções capazes de
+Com vista a obter a solução em tempo aceitável, foram criadas três soluções capazes de
 o fazer na ordem dos microsegundos. A primeira altera apenas ligeiramente a
 solução original, enquanto que a segunda é não recursiva (dinâmica) e utiliza o princípio da solução anterior
 com algumas optimizações. A terceira combina as duas soluções anteriores.
 \subsection{Original}
-A solução dada é uma solução recursiva que itera sobre todas as possibilidades de
+A solução dada é recursiva e itera sobre todas as possibilidades de
 percurso, guardando a melhor solução até ao momento.
 
 Esta parte das soluções de maior número de passos (menor velocidade por passo) para
@@ -122,27 +122,27 @@ Por exemplo, a partir de \begin{math}n = 35\end{math}, o tempo de execução é 
 pelo que esta não é, portanto, uma solução viável para o problema. 
 
 \subsection{Original Improved} \label{original_improved}
-Esta solução introduz duas pequenas mudanças no código original, que, no entanto,
+A presente solução introduz duas pequenas mudanças no código original, que, no entanto,
 geram alterações significativas no seu comportamento.
 
 Em primeiro lugar, é introduzido controlo de fluxo através de um valor de retorno
-\extrang{boolean} (implementado como inteiro).
+\extrang{boolean} (implementado como um inteiro).
 \lstinputlisting[linerange={167-169}]{\srcdir/speed\_run.c}
 Se uma sequência de chamadas recursivas chegar a uma solução, a última chamada
 retorna 1. \lstinputlisting[linerange={166-167}]{\srcdir/speed\_run.c}
-Se for este o caso, as chamadas anteriores retornarão também 1.
+Neste caso, as chamadas anteriores retornarão também 1.
 Isto significa que o programa grava apenas a primeira solução que encontrar.
 \lstinputlisting[linerange={153-158}]{\srcdir/speed\_run.c}
-Tendo isto, torna-se imperativo que o programa encontre a melhor solução possível
-à primeira tentativa. Isto implica que o ``carro'' se mova o mais rápido possível
+Deste modo, torna-se imperativo que o programa encontre a melhor solução possível
+à primeira tentativa. Esta condição implica que o ``carro'' se mova o mais rápido possível
 em qualquer passo para obter o menor número de passos. A segunda alteração
-garante essa condição ao fazer com que o programa itere
+garante essa condição, ao fazer com que o programa itere
 desde as maiores velocidades para as menores.
 \lstinputlisting[linerange={163-164}]{\srcdir/speed\_run.c}
 
 \subsection{Advance and retreat}
-Este algoritmo foi feito de raiz. Tem como
-princípio tentar a qualquer passo avançar com a velocidade mais alta.
+O algoritmo Advance and retreat foi feito de raiz. O seu princípio 
+consiste em tentar, a qualquer passo, avançar com a velocidade mais alta.
 Em cada passo, a escolha de velocidade é representada por um incremento
 ($-$1, 0 ou 1). O programa começa sempre por tentar o maior incremento.
 Para verificar passos possíveis, utilizam-se os seguintes métodos:
@@ -155,12 +155,12 @@ Verificar, a partir do incremento mais alto, se uma ``passada'' não  quebra
 os limites de velocidade das casas pelas quais passaria:
 \lstinputlisting[firstline=196, lastline=203]{\srcdir/speed\_run.c}
 
-Feito o passo, a escolha de incremento é guardada num \extrang{array}
+Realizado o passo, a escolha do incremento é guardada num \extrang{array},
 na posição associada ao número do passo. Desta forma, este \extrang{array}
 guarda as escolhas feitas até ao passo atual.
 \lstinputlisting[firstline=217, lastline=231]{\srcdir/speed\_run.c}
-Quando um passo é impossível de executar a qualquer das velocidades possíveis nesse
-passo, o algoritmo recua um passo e tenta reduzir o incremento de velocidade até que
+Quando um passo é impossível de executar a qualquer das velocidades possíveis,
+o algoritmo recua um passo e tenta reduzir o incremento de velocidade até que
 consiga avançar novamente. Não sendo possível avançar com nenhum dos incrementos,
 o programa recua novamente, e assim sucessivamente.
 \lstinputlisting[firstline=263, lastline=265]{\srcdir/speed\_run.c}
@@ -188,7 +188,7 @@ pelo que foi necessário recorrer a estimativas, utilizando o MATLAB.
 
 Procedeu-se ao ajuste de uma curva do tipo \begin{math}a\times e^{bx}\end{math}
 aos tempos obtidos até uma hora, utilizando a Curve Fitting Toolbox do MATLAB.
-De seguida, foi calculado o tempo de execução para \begin{math}n = 800\end{math}
+De seguida, foi calculado o tempo de execução para \begin{math}n = 800\end{math},
 através da equação exponencial determinada anteriormente.
 
 Para o número mecanográfico 107927, obteve-se a equação \begin{math}y = (\num{7.942e-09})\times e^{0.5081x}\end{math}
@@ -258,7 +258,7 @@ Pelo facto de o algoritmo Original Improved efetuar cálculos em tempos com orde
 \begin{math}10^{-6}\end{math}, foi possível obter um tempo de execução para \begin{math}n = 800\end{math}.
 
 Contudo, os valores até \begin{math}n = 60\end{math} não são fiáveis para ajustar uma reta,
-pois são constituídos, na sua grande parte, por ruído.
+pois são constituídos, na sua maior parte, por ruído.
 Este é causado pelo script de medição de tempo que, devido a questões de arquitetura,
 não consegue reportar valores temporais tão baixos.
 
@@ -284,12 +284,12 @@ A reta de ajuste tem equação \begin{math}y=(\num{7.464e-09})x+(\num{7.920e-07}
 
 Este algoritmo é o mais eficiente, já que o declive da reta ajustada é o mais baixo
 (ordem de grandeza \begin{math}10^{-9}\end{math}), quando comparado com os
-declives dos outros algoritmos (ordem de grandeza \begin{math}10^{-8}\end{math}).
+declives dos restantes (ordem de grandeza \begin{math}10^{-8}\end{math}).
 A não recursão do algoritmo é, provavelmente, um fator decisivo que contribui para a sua eficiência.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.43\linewidth]{\matlabdir/Results\_sol3/fitted.png}
+	\includegraphics[width=0.42\linewidth]{\matlabdir/Results\_sol3/fitted.png}
 	\caption{Tempos de execução e função exponencial ajustada.}
 	\label{fig:sol3}
 \end{figure}
@@ -300,15 +300,15 @@ baixos, pelo que os valores iniciais de \begin{math}n\end{math} são considerado
 
 A reta de ajuste tem equação \begin{math}y=(\num{1.081e-08})x+(\num{7.594e-07})\end{math}.
 
-Apesar da alteração efetuada neste algoritmo, o decive da reta de ajuste é aproximadamente igual ao da
+Apesar da alteração efetuada neste algoritmo, o declive da reta de ajuste é aproximadamente igual ao da
 solução Original Improved (excluem-se pequenas diferenças devido à presença de fatores externos).
 Assim, este algoritmo tem a mesma eficiência do algoritmo que tem por base.
-Estes resultados podem ser explicados pelo facto de a complexidade da expressão \extrang{boolean}
+A explicação para a obtenção destes resultados deve-se ao facto de a complexidade da expressão \extrang{boolean}
 e da função \verb#valstop# ser a mesma, o que não produz qualquer diferença.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.43\linewidth]{\matlabdir/Results\_sol4/fitted.png}
+	\includegraphics[width=0.42\linewidth]{\matlabdir/Results\_sol4/fitted.png}
 	\caption{Tempos de execução e função exponencial ajustada.}
 	\label{fig:sol4}
 \end{figure}

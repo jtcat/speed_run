@@ -66,7 +66,7 @@
 }
 
 
-\newcommand{\extrang}[1]{\textit{#1}}
+\newcommand{\foreign}[1]{\textit{#1}}
 \newcommand{\srcdir}{..}
 \newcommand{\matlabdir}{"../MATLAB-fittings"}
 
@@ -123,7 +123,7 @@ A presente solução introduz duas pequenas mudanças no código original, que, 
 geram alterações significativas no seu comportamento.
 
 Em primeiro lugar, é introduzido controlo de fluxo através de um valor de retorno
-\extrang{boolean} (implementado como um inteiro).
+\foreign{boolean} (implementado como inteiro).
 \lstinputlisting[linerange={167-169}]{\srcdir/speed\_run.c}
 Se uma sequência de chamadas recursivas chegar a uma solução, a última chamada
 retorna 1. \lstinputlisting[linerange={166-167}]{\srcdir/speed\_run.c}
@@ -152,8 +152,8 @@ Verificar, a partir do incremento mais alto, se uma ``passada'' não  quebra
 os limites de velocidade das casas pelas quais passaria:
 \lstinputlisting[firstline=196, lastline=203]{\srcdir/speed\_run.c}
 
-Realizado o passo, a escolha do incremento é guardada num \extrang{array},
-na posição associada ao número do passo. Desta forma, este \extrang{array}
+Realizado o passo, a escolha do incremento é guardada num \foreign{array},
+na posição associada ao número do passo. Desta forma, este \foreign{array}
 guarda as escolhas feitas até ao passo atual.
 \lstinputlisting[firstline=217, lastline=231]{\srcdir/speed\_run.c}
 Quando um passo é impossível de executar a qualquer das velocidades possíveis,
@@ -162,10 +162,12 @@ consiga avançar novamente. Não sendo possível avançar com nenhum dos increme
 o programa recua novamente, e assim sucessivamente.
 \lstinputlisting[firstline=263, lastline=265]{\srcdir/speed\_run.c}
 \subsection{Combined}
-O algoritmo Combined é, na sua grande parte, idêntico ao algoritmo Original Improved.
-Contudo, ao invés de, no ciclo \verb#for#, existir uma verificação da posição final através da expressão \extrang{boolean}
-\verb#position + new_speed <= final_position#,
-utilizou-se a função \verb#valstop(position, new_speed, final_position)#, presente no algoritmo Advance and retreat.
+Com esta solução, tentou-se aproximar o comportamento do algoritmo
+\foreign{Original Improved} à solução \foreign{Advance and Retreat}, com o
+objetivo de observar diferenças entre uma solução dinâmica e recursiva com
+lógica semelhante.
+Para tal, ao invés de, no ciclo \verb#for#, existir uma verificação de
+\foreign{overstep} para passo, utilizou-se a função \verb#valstop#, presente no algoritmo \foreign{Advance and retreat}.
 \lstinputlisting[firstline=307, lastline=316]{\srcdir/speed\_run.c}
 \pagebreak
 
@@ -300,7 +302,7 @@ A reta de ajuste tem equação \begin{math}y=(\num{1.081e-08})x+(\num{7.594e-07}
 Apesar da alteração efetuada neste algoritmo, o declive da reta de ajuste é aproximadamente igual ao da
 solução Original Improved (excluem-se pequenas diferenças devido à presença de fatores externos).
 Assim, este algoritmo tem a mesma eficiência do algoritmo que tem por base.
-A explicação para a obtenção destes resultados deve-se ao facto de a complexidade da expressão \extrang{boolean}
+A explicação para a obtenção destes resultados deve-se ao facto de a complexidade da expressão \foreign{boolean}
 e da função \verb#valstop# ser a mesma, o que não produz qualquer diferença.
 
 \begin{figure}[h]

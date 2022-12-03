@@ -14,8 +14,9 @@
 \contentsline {subsection}{\numberline {4.2}Original Improved}{8}{}%
 \contentsline {subsection}{\numberline {4.3}Advance and retreat}{9}{}%
 \contentsline {subsection}{\numberline {4.4}Combined}{9}{}%
-\contentsline {section}{\numberline {5}Código}{10}{}%
-\contentsline {subsection}{\numberline {5.1}Original Improved}{10}{}%
-\contentsline {subsection}{\numberline {5.2}Advance and retreat}{11}{}%
-\contentsline {subsection}{\numberline {5.3}Combined}{13}{}%
-\contentsline {subsection}{\numberline {5.4}Ajuste dos dados obtidos utilizando o MATLAB}{14}{}%
+\contentsline {section}{\numberline {5}Conclusão}{10}{}%
+\contentsline {section}{\numberline {6}Código}{11}{}%
+\contentsline {subsection}{\numberline {6.1}Original Improved}{11}{}%
+\contentsline {subsection}{\numberline {6.2}Advance and retreat}{12}{}%
+\contentsline {subsection}{\numberline {6.3}Combined}{14}{}%
+\contentsline {subsection}{\numberline {6.4}Ajuste dos dados obtidos utilizando o MATLAB}{15}{}%

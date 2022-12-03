@@ -311,6 +311,18 @@ e da função \verb#valstop# ser a mesma, o que não produz qualquer diferença.
 \end{figure}
 \pagebreak
 
+\section{Conclusão}
+Através dos resultados obtidos, foi possível concluir que o algoritmo Advance and retreat é o mais eficiente,
+uma vez que o declive da reta de ajuste é o mais baixo. Uma das razões para tal acontecer é a não recursão do algoritmo,
+ou seja, o facto de a função ir guardando os valores anteriormente calculados num \extrang{array}.
+
+Contudo, o algoritmo Original Improved é igualmente eficiente, já que é possível obter um tempo de execução
+com ordem de grandeza \begin{math}10^{-6}\end{math} para \begin{math}n = 800\end{math}.
+
+A solução Combined, que tem por base o algoritmo Original Improved, não apresenta diferenças significativas,
+pelo que podemos concluir que alterações com a mesma complexidade computacional não produzem resultados diferentes.
+
+\pagebreak
 \section{Código}
 \subsection{Original Improved}
 \lstinputlisting[firstline=142, lastline=184]{\srcdir/speed\_run.c}

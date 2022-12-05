@@ -97,12 +97,13 @@
 \pagebreak
 
 \section{Introdução}
-Este trabalho consiste em desenvolver algoritmos capazes de resolver o seguinte problema:
-
-Uma estrada encontra-se dividida em vários segmentos de igual tamanho, cada um com uma velocidade pré-definida.
-O objetivo deste problema é encontrar o menor número de passos necessários para
-percorrer a estrada, começando no primeiro segmento e terminando no último, com
-velocidade 1.
+Este trabalho teve como base o seguinte problema:
+Uma estrada encontra-se dividida em vários segmentos de igual tamanho.
+O objetivo é determinar o menor número de passos necessários para percorrer
+a estrada, começando no primeiro segmento e terminando no último, com passo
+de comprimento 0.
+A figura seguinte ilustra uma solução para uma estrada de 24 elementos, com as posições tomadas no percurso marcadas
+a cinzento.
 \newcommand{\hlcol}{\cellcolor[HTML]{cccccc}}
 \begin{center}
 	\vspace{-1em}
@@ -112,51 +113,50 @@ velocidade 1.
 		\hline
 	\end{tabular}
 \end{center}
-Em cada passo, é possível avançar para os segmentos seguintes, com velocidade igual à velocidade de chegada ao segmento atual
-ou inferior/superior à velocidade atual em 1 unidade.
-Contudo, em cada iteração, deve-se verificar se a velocidade de partida é igual ou inferior à velocidade dos segmentos seguintes.
-Caso a velocidade atual seja 1, não é possível reduzir a velocidade.
+Antes de cada passo, é possível manter, aumentar ou diminuir o comprimento de passo atual em 1
+unidade. Contudo, antes de cada movimento, o comprimento utilizado tem de ser igual ou inferior ao comprimento máximo definido em cada um dos segmentos que seriam percorridos pelo passo.
 
+Um dos objetivo do trabalho envolve estudar a solução exaustiva dada e obter
+uma estimativa do seu tempo de execução para uma estrada de tamanho 800. O outro
+objetivo consiste em determinar algoritmos melhores que o anterior, com
+capacidade de resolver o caso de tamanho 800 num intervalo de tempo razoável,
+preferencialmente na ordem dos microsegundos.
 \section{Soluções}
 A solução original utiliza uma função recursiva para verificar todas as combinações
 de passos a todas as velocidades possíveis dentro dos limites de cada casa,
 guardando sempre a melhor solução encontrada até ao momento. Esta possui um tempo
-de execução com ordem de grandeza \begin{math}10^{154}\end{math} (em anos) para a resolução do caso \begin{math}n = 800\end{math}.
+de execução com ordem de grandeza \begin{math}10^{154}\end{math} (em anos) para a resolução do caso \begin{math}n = 800\end{math}, comprovado na \autoref{original_study}.
 Com vista a obter a solução em tempo aceitável, foram criadas três soluções capazes de
 o fazer na ordem dos microsegundos. A primeira altera apenas ligeiramente a
 solução original, enquanto que a segunda é não recursiva (dinâmica) e utiliza o princípio da solução anterior
 com algumas optimizações. A terceira combina as duas soluções anteriores.
 \subsection{Original}
-A solução dada é recursiva e itera sobre todas as possibilidades de
-percurso, guardando a melhor solução até ao momento.
+A solução dada é recursiva e exaustiva: itera sobre todas as possibilidades de
+percurso, devolvendo a solução com menor número de passos encontrada.
 
-Esta parte das soluções de maior número de passos (menor velocidade por passo) para
+O algoritmo parte das soluções de maior número de passos (menor velocidade por passo) para
 as de menor número de passos (maior velocidade por passo) dentro das regras do problema.
-Pelo facto de a solução ser recursiva, à medida que o tamanho do problema aumenta,
+Pelo facto de a solução ser exaustiva, à medida que o tamanho do problema aumenta,
 o número de chamadas recursivas também aumenta, o que leva a um tempo de execução exponencial.
-Por exemplo, a partir de \begin{math}n = 35\end{math}, o tempo de execução é superior a 1 segundo,
-pelo que esta não é, portanto, uma solução viável para o problema. 
-
 \subsection{Original Improved} \label{original_improved}
-A presente solução introduz duas pequenas mudanças no código original, que, no entanto,
-geram alterações significativas no seu comportamento.
+A solução \foreign{Original Improved} deriva da anterior, introduzindo duas mudanças no código original, que geram alterações significativas no seu comportamento.
 
 Em primeiro lugar, é introduzido controlo de fluxo através de um valor de retorno
-\foreign{boolean} (implementado como inteiro).
+booleano (implementado como inteiro): o algoritmo não é exaustivo.
 Se uma sequência de chamadas recursivas chegar a uma solução, a última chamada
 retorna 1. \lstinputlisting[linerange={166-167}]{\srcdir/speed\_run.c}
 Neste caso, as chamadas anteriores retornarão também 1.
 Isto significa que o programa grava apenas a primeira solução que encontrar.
 \lstinputlisting[linerange={153-158}]{\srcdir/speed\_run.c}
-Deste modo, torna-se imperativo que o programa encontre a melhor solução possível
-à primeira tentativa. Esta condição implica que o ``carro'' se mova o mais rápido possível
-em qualquer passo para obter o menor número de passos. A segunda alteração
-garante essa condição, ao fazer com que o programa itere
-desde as maiores velocidades para as menores.
-\lstinputlisting[linerange={163-164}]{\srcdir/speed\_run.c}
+A segunda alteração feita ao programa garante que a primeira solução determinada é a
+menor possível.
+Agora, o programa itera em cada passo da maior velocidade possível para a menor. Torna-se
+desnecessário verificar soluções com escolhas de velocidade menores pois essas irão
+executar mais passos de menor tamanho.
+\lstinputlisting[linerange={163-163}]{\srcdir/speed\_run.c}
 
 \subsection{Advance and retreat}
-O algoritmo Advance and retreat foi feito de raiz. O seu princípio 
+O algoritmo \foreign{Advance and retreat} foi feito de raiz. O seu princípio 
 consiste em tentar, a qualquer passo, avançar com a velocidade mais alta.
 Em cada passo, a escolha de velocidade é representada por um incremento
 ($-$1, 0 ou 1). O programa começa sempre por tentar o maior incremento.
@@ -185,7 +185,7 @@ Com esta solução, tentou-se aproximar o comportamento do algoritmo
 objetivo de observar diferenças entre uma solução dinâmica e recursiva com
 lógica semelhante.
 Para tal, ao invés de, no ciclo \verb#for#, existir uma verificação de
-\foreign{overstep} para passo, utilizou-se a função \verb#valstop#, presente no algoritmo \foreign{Advance and retreat}.
+\foreign{overstep} para passo, utilizou-se a função \verb#valstop#, introduzida no algoritmo \foreign{Advance and retreat}.
 \lstinputlisting[firstline=307, lastline=316]{\srcdir/speed\_run.c}
 \pagebreak
 
@@ -199,7 +199,7 @@ Para tal, ao invés de, no ciclo \verb#for#, existir uma verificação de
 \pagebreak
 
 \section{Tempos de execução e estimativas}
-\subsection{Original}
+\subsection{Original} \label{original_study}
 Devido à complexidade do algoritmo, não foi possível obter tempos de execução para \begin{math}n = 800\end{math},
 pelo que foi necessário recorrer a estimativas, utilizando o MATLAB.
 
@@ -283,7 +283,7 @@ não consegue reportar valores temporais tão baixos.
 A reta de ajuste obtida tem equação \begin{math}y=(\num{1.069e-08})x+(\num{9.515e-07})\end{math},
 pelo que este algoritmo tem uma complexidade computacional de \begin{math}O(n)\end{math}.
 
-As alterações indicadas na secção \ref{original_improved} são a explicação para uma diferença tão significativa nos resultados,
+As alterações indicadas na secção \autoref{original_improved} são a explicação para uma diferença tão significativa nos resultados,
 quando comparado com o algoritmo Original.
 
 \begin{figure}[h]
@@ -304,7 +304,7 @@ A reta de ajuste tem equação \begin{math}y=(\num{7.464e-09})x+(\num{7.920e-07}
 Este algoritmo é o mais eficiente, já que, apesar de a complexidade computacional ser \begin{math}O(n)\end{math},
 o declive da reta ajustada é o mais baixo (ordem de grandeza \begin{math}10^{-9}\end{math}), quando comparado com os
 declives dos restantes (ordem de grandeza \begin{math}10^{-8}\end{math}).
-A não recursão do algoritmo é, provavelmente, um fator decisivo que contribui para a sua eficiência.
+Sendo semelhante a nível lógico ao anterior, a natureza não recursiva do algoritmo contribui para a sua eficiência.
 
 \begin{figure}[h]
 	\centering
@@ -312,7 +312,6 @@ A não recursão do algoritmo é, provavelmente, um fator decisivo que contribui
 	\caption{Tempos de execução e função exponencial ajustada.}
 	\label{fig:sol3}
 \end{figure}
-
 \subsection{Combined}
 Pela mesma razão das soluções anteriores, o algoritmo Combined também efetua cálculos em tempos bastante
 baixos, pelo que os valores iniciais de \begin{math}n\end{math} são considerados, mais uma vez, ruído.
@@ -320,10 +319,9 @@ baixos, pelo que os valores iniciais de \begin{math}n\end{math} são considerado
 A reta de ajuste tem equação \begin{math}y=(\num{1.081e-08})x+(\num{7.594e-07})\end{math}.
 
 Apesar da alteração efetuada neste algoritmo, o declive da reta de ajuste é aproximadamente igual ao da
-solução Original Improved (excluem-se pequenas diferenças devido à presença de fatores externos).
+solução Original Improved.
 Assim, este algoritmo tem a mesma eficiência e a mesma complexidade computacional do algoritmo que tem por base (\begin{math}O(n)\end{math}).
-A explicação para a obtenção destes resultados deve-se ao facto de a complexidade computacional
-da expressão \foreign{boolean} e da função \verb#valstop# ser a mesma, o que não produz qualquer diferença.
+A semelhança aos resultados anteriores indica que a optimização introduzida pela função \verb#valstop# não alterou a complexidade computacional no intervalo estudado.
 
 \begin{figure}[h]
 	\centering
@@ -335,7 +333,7 @@ da expressão \foreign{boolean} e da função \verb#valstop# ser a mesma, o que 
 
 \section{Conclusão}
 Neste trabalho foi possível estudar a evolução temporal da solução original e determinar
-uma estimativa de resolução para o caso final. Foi também possível elaborar dois algori%
+uma estimativa do tempo de resolução para o caso final. Foi também possível elaborar dois algori%
 tmos capazes de resolver o caso final num intervalo de tempo na ordem dos microsegundos.
 
 Através dos resultados obtidos, foi possível concluir que o algoritmo Advance and
@@ -344,10 +342,11 @@ Uma das razões para tal acontecer é a natureza dinâmica do algoritmo,
 ou seja, o facto de a função ir guardando os valores anteriormente calculados num \foreign{array}.
 
 Contudo, o algoritmo Original Improved é igualmente eficiente, já que é possível obter um tempo de execução
-com ordem de grandeza \begin{math}10^{-6}\end{math} para \begin{math}n = 800\end{math}.
+com ordem de grandeza \begin{math}10^{-6}\end{math} para \begin{math}n = 800\end{math}. A diferença para com o algoritmo anterior pode ser justificada pelo \foreign{overhead}
+associado ao uso de funções recursivas.
 
-A solução Combined, que tem por base o algoritmo Original Improved, não apresenta diferenças significativas,
-pelo que podemos concluir que alterações com a mesma complexidade computacional não produzem resultados diferentes.
+A solução Combined, que tem por base o algoritmo Original Improved, não apresenta diferenças significativas nos tempos de execução,
+pelo que podemos concluir que as optimizações introduzidas não foram significativas.
 
 \pagebreak
 \newgeometry{margin=2cm}

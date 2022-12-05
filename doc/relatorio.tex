@@ -314,9 +314,13 @@ e da função \verb#valstop# ser a mesma, o que não produz qualquer diferença.
 \pagebreak
 
 \section{Conclusão}
-Através dos resultados obtidos, foi possível concluir que o algoritmo Advance and retreat é o mais eficiente,
-uma vez que o declive da reta de ajuste é o mais baixo. Uma das razões para tal acontecer é a não recursão do algoritmo,
-ou seja, o facto de a função ir guardando os valores anteriormente calculados num \extrang{array}.
+Neste trabalho foi possível estudar a evolução temporal da solução original e determinar
+uma estimativa de resolução para o caso final. Foi também possível elaborar dois algori%
+tmos capazes de resolver o caso final num intervalo de tempo na ordem dos microsegundos. 
+Através dos resultados obtidos, foi possível concluir que o algoritmo Advance and
+retreat é o mais eficiente, uma vez que o declive da reta de ajuste é o mais baixo.
+Uma das razões para tal acontecer é a natureza dinâmica do algoritmo,
+ou seja, o facto de a função ir guardando os valores anteriormente calculados num \foreign{array}.
 
 Contudo, o algoritmo Original Improved é igualmente eficiente, já que é possível obter um tempo de execução
 com ordem de grandeza \begin{math}10^{-6}\end{math} para \begin{math}n = 800\end{math}.

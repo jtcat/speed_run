@@ -278,7 +278,8 @@ pois são constituídos, na sua maior parte, por ruído.
 Este é causado pelo script de medição de tempo que, devido a questões de arquitetura,
 não consegue reportar valores temporais tão baixos.
 
-A reta de ajuste obtida tem equação \begin{math}y=(\num{1.069e-08})x+(\num{9.515e-07})\end{math}.
+A reta de ajuste obtida tem equação \begin{math}y=(\num{1.069e-08})x+(\num{9.515e-07})\end{math},
+pelo que este algoritmo tem uma complexidade computacional de \begin{math}O(n)\end{math}.
 
 As alterações indicadas na secção \ref{original_improved} são a explicação para uma diferença tão significativa nos resultados,
 quando comparado com o algoritmo Original.
@@ -298,8 +299,8 @@ Assim, os valores iniciais de \begin{math}n\end{math} constituem igualmente ruí
 
 A reta de ajuste tem equação \begin{math}y=(\num{7.464e-09})x+(\num{7.920e-07})\end{math}.
 
-Este algoritmo é o mais eficiente, já que o declive da reta ajustada é o mais baixo
-(ordem de grandeza \begin{math}10^{-9}\end{math}), quando comparado com os
+Este algoritmo é o mais eficiente, já que, apesar de a complexidade computacional ser \begin{math}O(n)\end{math},
+o declive da reta ajustada é o mais baixo (ordem de grandeza \begin{math}10^{-9}\end{math}), quando comparado com os
 declives dos restantes (ordem de grandeza \begin{math}10^{-8}\end{math}).
 A não recursão do algoritmo é, provavelmente, um fator decisivo que contribui para a sua eficiência.
 
@@ -318,9 +319,9 @@ A reta de ajuste tem equação \begin{math}y=(\num{1.081e-08})x+(\num{7.594e-07}
 
 Apesar da alteração efetuada neste algoritmo, o declive da reta de ajuste é aproximadamente igual ao da
 solução Original Improved (excluem-se pequenas diferenças devido à presença de fatores externos).
-Assim, este algoritmo tem a mesma eficiência do algoritmo que tem por base.
-A explicação para a obtenção destes resultados deve-se ao facto de a complexidade da expressão \foreign{boolean}
-e da função \verb#valstop# ser a mesma, o que não produz qualquer diferença.
+Assim, este algoritmo tem a mesma eficiência e a mesma complexidade computacional do algoritmo que tem por base (\begin{math}O(n)\end{math}).
+A explicação para a obtenção destes resultados deve-se ao facto de a complexidade computacional
+da expressão \foreign{boolean} e da função \verb#valstop# ser a mesma, o que não produz qualquer diferença.
 
 \begin{figure}[h]
 	\centering
@@ -333,7 +334,8 @@ e da função \verb#valstop# ser a mesma, o que não produz qualquer diferença.
 \section{Conclusão}
 Neste trabalho foi possível estudar a evolução temporal da solução original e determinar
 uma estimativa de resolução para o caso final. Foi também possível elaborar dois algori%
-tmos capazes de resolver o caso final num intervalo de tempo na ordem dos microsegundos. 
+tmos capazes de resolver o caso final num intervalo de tempo na ordem dos microsegundos.
+
 Através dos resultados obtidos, foi possível concluir que o algoritmo Advance and
 retreat é o mais eficiente, uma vez que o declive da reta de ajuste é o mais baixo.
 Uma das razões para tal acontecer é a natureza dinâmica do algoritmo,

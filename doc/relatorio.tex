@@ -4,7 +4,7 @@
 \usepackage{fancyhdr}
 \usepackage[portuguese]{babel}
 \usepackage{blindtext}
-\usepackage{color}
+\usepackage[table]{xcolor}
 \usepackage{listings}
 \usepackage[T1]{fontenc}
 \usepackage[margin=3cm]{geometry}
@@ -99,8 +99,18 @@
 Este trabalho consiste em desenvolver algoritmos capazes de resolver o seguinte problema:
 
 Uma estrada encontra-se dividida em vários segmentos de igual tamanho, cada um com uma velocidade pré-definida.
-O objetivo deste problema é encontrar o menor número de passos necessários para percorrer a estrada, começando no primeiro segmento e terminando no último, com velocidade 1.
-
+O objetivo deste problema é encontrar o menor número de passos necessários para
+percorrer a estrada, começando no primeiro segmento e terminando no último, com
+velocidade 1.
+\newcommand{\hlcol}{\cellcolor[HTML]{cccccc}}
+\begin{center}
+	\vspace{-1em}
+	\begin{tabular}{*{29}{|c}}
+		\hline
+		\hlcol5 & \hlcol5 & 6 & \hlcol6 & 8 & 7 & \hlcol8 & 9 & 8 & 9 & \hlcol8 & 9 & 9 & 8 & \hlcol9 & 7 & 7 & \hlcol6 & 6 & 6 & \hlcol5 & 6 & \hlcol5 & \hlcol4\\
+		\hline
+	\end{tabular}
+\end{center}
 Em cada passo, é possível avançar para os segmentos seguintes, com velocidade igual à velocidade de chegada ao segmento atual
 ou inferior/superior à velocidade atual em 1 unidade.
 Contudo, em cada iteração, deve-se verificar se a velocidade de partida é igual ou inferior à velocidade dos segmentos seguintes.
@@ -121,7 +131,6 @@ percurso, guardando a melhor solução até ao momento.
 
 Esta parte das soluções de maior número de passos (menor velocidade por passo) para
 as de menor número de passos (maior velocidade por passo) dentro das regras do problema.
-
 Pelo facto de a solução ser recursiva, à medida que o tamanho do problema aumenta,
 o número de chamadas recursivas também aumenta, o que leva a um tempo de execução exponencial.
 Por exemplo, a partir de \begin{math}n = 35\end{math}, o tempo de execução é superior a 1 segundo,
@@ -133,7 +142,6 @@ geram alterações significativas no seu comportamento.
 
 Em primeiro lugar, é introduzido controlo de fluxo através de um valor de retorno
 \foreign{boolean} (implementado como inteiro).
-\lstinputlisting[linerange={167-169}]{\srcdir/speed\_run.c}
 Se uma sequência de chamadas recursivas chegar a uma solução, a última chamada
 retorna 1. \lstinputlisting[linerange={166-167}]{\srcdir/speed\_run.c}
 Neste caso, as chamadas anteriores retornarão também 1.
@@ -338,6 +346,7 @@ A solução Combined, que tem por base o algoritmo Original Improved, não apres
 pelo que podemos concluir que alterações com a mesma complexidade computacional não produzem resultados diferentes.
 
 \pagebreak
+\newgeometry{margin=2cm}
 \section{Código}
 \subsection{Original Improved}
 \lstinputlisting[firstline=142, lastline=184]{\srcdir/speed\_run.c}
@@ -350,5 +359,5 @@ pelo que podemos concluir que alterações com a mesma complexidade computaciona
 \pagebreak
 \subsection{Ajuste dos dados obtidos utilizando o MATLAB}
 \lstinputlisting[firstline=5, lastline=31, style=Matlab-editor, numbers=none, basicstyle=\small\ttfamily]{\matlabdir/speed\_run.m}
-
+\restoregeometry
 \end{document}

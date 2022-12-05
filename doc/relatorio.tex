@@ -116,7 +116,7 @@ a cinzento.
 Antes de cada passo, é possível manter, aumentar ou diminuir o comprimento de passo atual em 1
 unidade. Contudo, antes de cada movimento, o comprimento utilizado tem de ser igual ou inferior ao comprimento máximo definido em cada um dos segmentos que seriam percorridos pelo passo.
 
-Um dos objetivo do trabalho envolve estudar a solução exaustiva dada e obter
+Um dos objetivos do trabalho envolve estudar a solução exaustiva dada e obter
 uma estimativa do seu tempo de execução para uma estrada de tamanho 800. O outro
 objetivo consiste em determinar algoritmos melhores que o anterior, com
 capacidade de resolver o caso de tamanho 800 num intervalo de tempo razoável,
@@ -150,8 +150,8 @@ Isto significa que o programa grava apenas a primeira solução que encontrar.
 \lstinputlisting[linerange={153-158}]{\srcdir/speed\_run.c}
 A segunda alteração feita ao programa garante que a primeira solução determinada é a
 menor possível.
-Agora, o programa itera em cada passo da maior velocidade possível para a menor. Torna-se
-desnecessário verificar soluções com escolhas de velocidade menores pois essas irão
+Assim, o programa itera em cada passo da maior velocidade possível para a menor. Torna-se
+desnecessário verificar soluções com escolhas de velocidade menores, pois essas irão
 executar mais passos de menor tamanho.
 \lstinputlisting[linerange={163-163}]{\srcdir/speed\_run.c}
 
